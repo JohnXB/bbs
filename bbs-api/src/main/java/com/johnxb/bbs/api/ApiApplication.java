@@ -1,4 +1,4 @@
-package com.johnxb.api;
+package com.johnxb.bbs.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,7 +35,7 @@ public class ApiApplication {
                 .pathMapping("/")// base，最终调用接口后会和paths拼接在一起
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.johnxb.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.johnxb.bbs.api"))
                 .build();
     }
 

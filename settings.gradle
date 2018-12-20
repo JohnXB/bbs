@@ -1,3 +1,7 @@
 rootProject.name = 'bbs'
-include 'api'
+include 'bbs-api'
+include 'bbs-dao'
+include 'bbs-service'
+include 'bbs-service-impl'
+include 'bbs-entity'
 
