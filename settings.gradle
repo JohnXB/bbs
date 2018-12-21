@@ -1,7 +1,12 @@
 rootProject.name = 'bbs'
 include 'bbs-api'
+findProject(':bbs-api')?.name = 'bbs-api'
 include 'bbs-dao'
+findProject(':bbs-dao')?.name = 'bbs-dao'
 include 'bbs-service'
+findProject(':bbs-service')?.name = 'bbs-service'
 include 'bbs-service-impl'
+findProject(':bbs-service-impl')?.name = 'bbs-service-impl'
 include 'bbs-entity'
+findProject(':bbs-entity')?.name = 'bbs-entity'
 
