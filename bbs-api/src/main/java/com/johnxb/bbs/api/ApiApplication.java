@@ -1,9 +1,11 @@
 package com.johnxb.bbs.api;
 
+import com.johnxb.bbs.dao.BbsDaoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -16,9 +18,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.johnxb.bbs.dao"})
 @Configuration
 @EnableSwagger2
+@Import({BbsDaoConfiguration.class})
 public class ApiApplication {
 
     public static void main(String[] args) {
