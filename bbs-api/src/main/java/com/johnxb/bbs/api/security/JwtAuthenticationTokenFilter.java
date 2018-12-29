@@ -18,6 +18,7 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+    private static final String FILTER_APPLIED = "__spring_security_demoFilter_filterApplied";
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -31,10 +32,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private String tokenHead;
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        //解决两次进入filter问题
+        if (request.getAttribute(FILTER_APPLIED) != null) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(tokenHead)) {
             final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
@@ -54,7 +58,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
         }
-
+        request.setAttribute(FILTER_APPLIED, true);
         chain.doFilter(request, response);
     }
 
