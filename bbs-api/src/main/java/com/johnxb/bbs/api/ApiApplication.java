@@ -18,7 +18,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@SpringBootApplication(scanBasePackages = {"com.johnxb.bbs.dao"})
+@SpringBootApplication(scanBasePackages = {"com.johnxb.bbs"})
 @Configuration
 @EnableSwagger2
 @Import({BbsDaoConfiguration.class})
@@ -38,7 +38,7 @@ public class ApiApplication {
                 .pathMapping("/")// base，最终调用接口后会和paths拼接在一起
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.johnxb.bbs.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.johnxb.bbs.api.controller"))
                 .build();
     }
 

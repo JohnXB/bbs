@@ -1,6 +1,7 @@
 package com.johnxb.bbs.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class AuthUser {
     private Integer id;
@@ -22,7 +23,7 @@ public class AuthUser {
     private String currentToken;
 
     private String username;
-
+    private List<String> roles;
     public AuthUser(Integer id, String nickname, String mail, String password, String avatar, Date registerAt, String gender, String phone, String currentToken, String username) {
         this.id = id;
         this.nickname = nickname;
@@ -118,5 +119,13 @@ public class AuthUser {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
