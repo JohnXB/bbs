@@ -18,7 +18,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 //        测试数据
         AuthUser user = new AuthUser();
         ArrayList<String> strings = new ArrayList<>();
-        strings.add("USER");
+        strings.add("ROLE_USER");
         user.setId(1);
         user.setUsername("john");
         user.setPassword("123456");
@@ -45,13 +45,13 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     public AuthUser signIn(AuthUser user) {
         if (user.getPassword().equals("000000")) {
-            user.setCurrentToken(generateToken(user));
             ArrayList<String> strings = new ArrayList<>();
             strings.add("USER");
             user.setId(1);
             user.setUsername("john");
             user.setMail("4081063");
             user.setRoles(strings);
+            user.setCurrentToken(generateToken(user));
             return user;
         }
         return null;

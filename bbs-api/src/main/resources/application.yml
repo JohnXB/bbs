@@ -5,7 +5,7 @@ logging:
       security: DEBUG
 jwt:
   header: Authorization
-  secret: w-oasis123456
+  secret: "secret"
   expiration: 604800
   tokenHead: "Bearer "
   exceptUrl: "/**"

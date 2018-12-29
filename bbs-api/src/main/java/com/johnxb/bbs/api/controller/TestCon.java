@@ -25,10 +25,9 @@ public class TestCon {
         System.out.println(user.getPassword());
         return authUserService.signIn(user);
     }
-
+    @PreAuthorize("hasRole('USER')")
     @ApiOperation(value = "用户访问api", notes = "用户访问api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('USER')")
     public String hi() {
 
         return "hello";
