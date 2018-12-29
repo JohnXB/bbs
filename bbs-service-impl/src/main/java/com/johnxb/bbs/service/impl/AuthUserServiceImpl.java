@@ -5,10 +5,8 @@ import com.johnxb.bbs.service.AuthUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class AuthUserServiceImpl implements AuthUserService {

@@ -10,17 +10,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@Api(description = "权限测试api", value = "/user")
-public class TestCon {
+@Api(description = "权限测试api")
+@RequestMapping(value = "/auth")
+public class AuthController {
     private final AuthUserService authUserService;
     @Autowired
-    public TestCon(AuthUserService authUserService) {
+    public AuthController(AuthUserService authUserService) {
         this.authUserService = authUserService;
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public AuthUser testApi(AuthUser user) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public AuthUser login(AuthUser user) {
         System.out.println(user.getPassword());
         return authUserService.signIn(user);
     }

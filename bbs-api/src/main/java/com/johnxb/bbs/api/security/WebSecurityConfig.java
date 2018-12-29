@@ -1,4 +1,5 @@
 package com.johnxb.bbs.api.security;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 使用BCrypt进行密码的hash
                 .passwordEncoder(passwordEncoder());
     }
+
+    // 验证token的fliter
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationTokenFilter();
     }
+
+    // 自定义403返回对象
+    @Bean
+    public MyAccessDeniedHandler getMyAccessDeniedHandler() throws Exception {
+        return new MyAccessDeniedHandler();
+    }
+
     // 装载BCrypt密码编码器
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.exceptionHandling().accessDeniedHandler(getMyAccessDeniedHandler());
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
                 // 由于使用的是JWT，我们这里不需要csrf
@@ -52,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 //获取token接口
-                .antMatchers("/test").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许对于网站静态资源的无授权访问
                 .antMatchers("/swagger-ui.html").permitAll()
