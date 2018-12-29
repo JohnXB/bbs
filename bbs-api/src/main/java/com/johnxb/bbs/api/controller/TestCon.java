@@ -20,8 +20,7 @@ public class TestCon {
 
     @ApiOperation(value = "用户登录", notes = "用户登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/test", method = RequestMethod.POST)
-//    @PreAuthorize("hasRole('USER')")
-    public AuthUser testApi( AuthUser user) {
+    public AuthUser testApi(AuthUser user) {
         System.out.println(user.getPassword());
         return authUserService.signIn(user);
     }
@@ -29,7 +28,6 @@ public class TestCon {
     @ApiOperation(value = "用户访问api", notes = "用户访问api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hi() {
-
         return "hello";
     }
 }

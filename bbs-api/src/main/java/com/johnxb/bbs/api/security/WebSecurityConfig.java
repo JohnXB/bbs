@@ -51,15 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 .authorizeRequests()
+                //获取token接口
+                .antMatchers("/test").permitAll()
                 //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许对于网站静态资源的无授权访问
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/configuration/ui").permitAll()
-                .antMatchers("/configuration/security").permitAll()
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
