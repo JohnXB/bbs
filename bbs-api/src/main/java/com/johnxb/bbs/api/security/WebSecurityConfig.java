@@ -64,12 +64,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //获取token接口
                 .antMatchers("/auth/login").permitAll()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                // 允许对于网站静态资源的无授权访问
+                //公共服务
+                .antMatchers("/common/**").permitAll()
+                //swagger
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/images/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/configuration/ui").permitAll()
+                .antMatchers("/configuration/security").permitAll()
+                // 允许对于网站静态资源的无授权访问
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
