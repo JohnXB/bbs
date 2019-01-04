@@ -17,9 +17,9 @@ public class CommonController {
     public String articles(){
         return "ab";
     }
-//    @ApiOperation(value = "根据id查找文章", notes = "有文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    @RequestMapping(value = "/article/{id}",method = RequestMethod.GET)
-//    public String article(@RequestParam int id){
-//        return "ab"+id;
-//    }
+    @ApiOperation(value = "根据id查找文章", notes = "有文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/article/{id}",method = RequestMethod.GET)
+    public String article(@RequestParam int id){
+        return "ab"+id;
+    }
 }

@@ -23,7 +23,9 @@ public class AuthUser {
     private String currentToken;
 
     private String username;
+
     private List<String> roles;
+
     public AuthUser(Integer id, String nickname, String mail, String password, String avatar, Date registerAt, String gender, String phone, String currentToken, String username) {
         this.id = id;
         this.nickname = nickname;
