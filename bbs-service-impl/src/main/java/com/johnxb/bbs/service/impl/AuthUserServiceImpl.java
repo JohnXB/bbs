@@ -16,7 +16,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 //        测试数据
         AuthUser user = new AuthUser();
         ArrayList<String> strings = new ArrayList<>();
-        strings.add("ROLE_ADMIN");
+        strings.add("ROLE_USER");
         user.setId(1);
         user.setUsername("john");
         user.setPassword("123456");
