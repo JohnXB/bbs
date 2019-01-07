@@ -16,7 +16,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 //        测试数据
         AuthUser user = new AuthUser();
         ArrayList<String> strings = new ArrayList<>();
-        strings.add("ROLE_USER");
+        strings.add("ROLE_ADMIN");
         user.setId(1);
         user.setUsername("john");
         user.setPassword("123456");
@@ -59,7 +59,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         return Jwts.builder()
                 .claim("id", user.getId())   //设置payload的键值对
                 .claim("username", user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, "secret") //采用什么算法是可以自己选择的，不一定非要采用HS512
                 .compact();
