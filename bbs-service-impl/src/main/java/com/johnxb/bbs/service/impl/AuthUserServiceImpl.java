@@ -1,15 +1,27 @@
 package com.johnxb.bbs.service.impl;
 
+import com.johnxb.bbs.JwtUser;
+import com.johnxb.bbs.dao.mapper.AuthUserMapper;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.service.AuthUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 @Service
 public class AuthUserServiceImpl implements AuthUserService {
+
+    private final AuthUserMapper authUserMapper;
+
+    @Autowired
+    public AuthUserServiceImpl(AuthUserMapper authUserMapper) {
+        this.authUserMapper = authUserMapper;
+    }
 
     @Override
     public AuthUser findByUserName(String username) {
@@ -24,6 +36,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         user.setRoles(strings);
         return user;
     }
+
     @Override
     public boolean signUp(AuthUser user) {
 //        List<String> usernameList = authUserMapper.checkByUsername(user.getUsername());
@@ -37,10 +50,12 @@ public class AuthUserServiceImpl implements AuthUserService {
 //        user.setCurrentToken(generateToken(user));
 //        int id = authUserMapper.insert(user);
 //        userRolesMapper.insertUserRole(user.getId(), 2);
-        return 1>0;
+        JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return 1 > 0;
 
     }
 
+    @Override
     public AuthUser signIn(AuthUser user) {
         if (user.getPassword().equals("000000")) {
             ArrayList<String> strings = new ArrayList<>();
@@ -55,7 +70,15 @@ public class AuthUserServiceImpl implements AuthUserService {
         return null;
     }
 
-   private String generateToken(AuthUser user) {
+    @Override
+    public AuthUser currentUser() {
+        JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        AuthUser user = authUserMapper.selectByPrimaryKey(jwtUser.getId());
+        //返回值待修改
+        return findByUserName("");
+    }
+
+    private String generateToken(AuthUser user) {
         return Jwts.builder()
                 .claim("id", user.getId())   //设置payload的键值对
                 .claim("username", user.getUsername())

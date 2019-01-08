@@ -24,5 +24,10 @@ public interface AuthUserService {
      */
     AuthUser signIn(AuthUser user);
 
+    /**
+     * @return 当前用户
+     */
+    AuthUser currentUser();
+
 
 }

@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api(description = "权限测试api")
 @RequestMapping(value = "/auth")
-public class AuthController {
+public class AuthController extends BaseController {
     private final AuthUserService authUserService;
+
     @Autowired
     public AuthController(AuthUserService authUserService) {
         this.authUserService = authUserService;
@@ -25,6 +26,7 @@ public class AuthController {
         System.out.println(user.getPassword());
         return authUserService.signIn(user);
     }
+
     @PreAuthorize("hasRole('USER')")
     @ApiOperation(value = "用户访问api", notes = "用户访问api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/hello", method = RequestMethod.GET)

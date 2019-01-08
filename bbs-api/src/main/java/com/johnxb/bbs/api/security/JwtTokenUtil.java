@@ -1,5 +1,6 @@
 package com.johnxb.bbs.api.security;
 
+import com.johnxb.bbs.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

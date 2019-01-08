@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(description = "公共服务api")
 @RequestMapping(value = "/common")
-public class CommonController {
+public class CommonController{
     @ApiOperation(value = "所有文章", notes = "所有文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/articles",method = RequestMethod.GET)
     public String articles(){
