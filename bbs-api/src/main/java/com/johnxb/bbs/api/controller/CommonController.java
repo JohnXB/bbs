@@ -3,12 +3,10 @@ package com.johnxb.bbs.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @Api(description = "公共服务api")
 @RequestMapping(value = "/common")
 public class CommonController{
@@ -19,7 +17,7 @@ public class CommonController{
     }
     @ApiOperation(value = "根据id查找文章", notes = "有文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/article/{id}",method = RequestMethod.GET)
-    public String article(@RequestParam int id){
+    public String article(@PathVariable int id){
         return "ab"+id;
     }
 }
