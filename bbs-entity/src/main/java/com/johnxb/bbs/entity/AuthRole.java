@@ -1,19 +1,19 @@
 package com.johnxb.bbs.entity;
 
-public class Role {
+public class AuthRole {
     private Integer id;
 
     private String roleName;
 
     private String roleCode;
 
-    public Role(Integer id, String roleName, String roleCode) {
+    public AuthRole(Integer id, String roleName, String roleCode) {
         this.id = id;
         this.roleName = roleName;
         this.roleCode = roleCode;
     }
 
-    public Role() {
+    public AuthRole() {
         super();
     }
 

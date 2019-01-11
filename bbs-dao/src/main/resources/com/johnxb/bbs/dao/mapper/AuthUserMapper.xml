@@ -9,7 +9,7 @@
       <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="register_at" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="gender" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="current_token" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
       phone, current_token, username
       )
     values (#{nickname,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{registerAt,jdbcType=TIMESTAMP}, #{gender,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{registerAt,jdbcType=TIMESTAMP}, #{gender,jdbcType=BIT}, 
       #{phone,jdbcType=VARCHAR}, #{currentToken,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
       )
   </insert>
@@ -39,7 +39,7 @@
       password = #{password,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
       register_at = #{registerAt,jdbcType=TIMESTAMP},
-      gender = #{gender,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
       phone = #{phone,jdbcType=VARCHAR},
       current_token = #{currentToken,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR}

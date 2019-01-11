@@ -1,19 +1,19 @@
 package com.johnxb.bbs.entity;
 
-public class RolePermissions {
+public class AuthRolePermissions {
     private Integer id;
 
     private Integer roleId;
 
     private Integer permissionId;
 
-    public RolePermissions(Integer id, Integer roleId, Integer permissionId) {
+    public AuthRolePermissions(Integer id, Integer roleId, Integer permissionId) {
         this.id = id;
         this.roleId = roleId;
         this.permissionId = permissionId;
     }
 
-    public RolePermissions() {
+    public AuthRolePermissions() {
         super();
     }
 

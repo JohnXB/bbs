@@ -2,7 +2,7 @@ package com.johnxb.bbs.entity;
 
 import java.util.Date;
 
-public class Permission {
+public class AuthPermission {
     private Integer id;
 
     private String permissionName;
@@ -11,14 +11,14 @@ public class Permission {
 
     private Date createAt;
 
-    public Permission(Integer id, String permissionName, String permissionCode, Date createAt) {
+    public AuthPermission(Integer id, String permissionName, String permissionCode, Date createAt) {
         this.id = id;
         this.permissionName = permissionName;
         this.permissionCode = permissionCode;
         this.createAt = createAt;
     }
 
-    public Permission() {
+    public AuthPermission() {
         super();
     }
 
