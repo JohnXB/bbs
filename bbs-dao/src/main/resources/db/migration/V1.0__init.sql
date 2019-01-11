@@ -15,12 +15,12 @@ create table auth_user
 (
    id                   int(11) not null auto_increment,
    nickname             varchar(20) character set utf8 not null,
-   mail                 varchar(20) character set utf8 not null,
+   mail                 varchar(20) character set utf8,
    password             varchar(255) character set utf8 not null,
    avatar               varchar(255) character set utf8,
    register_at          timestamp(0) not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    gender               varchar(5) character set utf8 not null,
-   phone                varchar(11) character set utf8 not null,
+   phone                varchar(11) character set utf8,
    current_token        varchar(1000) character set utf8,
    username             varchar(20) character set utf8 not null,
    primary key (id)
