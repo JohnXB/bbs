@@ -18,7 +18,7 @@ create table auth_user
    mail                 varchar(20) character set utf8,
    password             varchar(255) character set utf8 not null,
    avatar               varchar(255) character set utf8,
-   register_at          timestamp(0) not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   register_at          timestamp(0) not null default CURRENT_TIMESTAMP,
    gender               varchar(5) character set utf8 not null,
    phone                varchar(11) character set utf8,
    current_token        varchar(1000) character set utf8,
@@ -35,7 +35,7 @@ create table permission
    id                   int(11) not null auto_increment,
    permission_name      varchar(50) character set utf8 not null,
    permission_code      varchar(500) character set utf8 not null,
-   create_at            timestamp(0) not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   create_at            timestamp(0) not null default CURRENT_TIMESTAMP,
    primary key (id)
 )
 ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -95,7 +95,7 @@ create table auth_user
    mail                 varchar(20) character set utf8 not null,
    password             varchar(255) character set utf8 not null,
    avatar               varchar(255) character set utf8,
-   register_at          timestamp(0) not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   register_at          timestamp(0) not null default CURRENT_TIMESTAMP,
    gender               varchar(5) character set utf8 not null,
    phone                varchar(11) character set utf8 not null,
    current_token        varchar(1000) character set utf8,
@@ -112,7 +112,7 @@ create table permission
    id                   int(11) not null auto_increment,
    permission_name      varchar(50) character set utf8 not null,
    permission_code      varchar(500) character set utf8 not null,
-   create_at            timestamp(0) not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   create_at            timestamp(0) not null default CURRENT_TIMESTAMP,
    primary key (id)
 )
 ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
