@@ -23,18 +23,15 @@ public class AuthUserServiceImpl implements AuthUserService {
         this.authUserMapper = authUserMapper;
     }
 
+    /**
+     * @param username
+     * @return user
+     */
     @Override
     public AuthUser findByUserName(String username) {
 //        测试数据
-        AuthUser user = new AuthUser();
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("ROLE_USER");
-        user.setId(1);
-        user.setUsername("john");
-        user.setPassword("123456");
-        user.setMail("4081063");
-        user.setRoles(strings);
-        return user;
+        AuthUser authUser = authUserMapper.selectByUsername(username);
+        return authUser;
     }
 
     @Override
@@ -59,9 +56,9 @@ public class AuthUserServiceImpl implements AuthUserService {
     public AuthUser signIn(AuthUser user) {
         if (user.getPassword().equals("000000")) {
             ArrayList<String> strings = new ArrayList<>();
-            strings.add("USER");
+            strings.add("ROLE_USER");
             user.setId(1);
-            user.setUsername("john");
+            user.setUsername("johnxiao");
             user.setMail("4081063");
             user.setRoles(strings);
             user.setCurrentToken(generateToken(user));

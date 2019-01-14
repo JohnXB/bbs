@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johnxb.bbs.dao.mapper.BbsArticleMapper">
+  <resultMap id="BaseResultMap" type="com.johnxb.bbs.entity.BbsArticle">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="is_examine" jdbcType="BIT" property="isExamine" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="examine_result" jdbcType="VARCHAR" property="examineResult" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, user_id, tag_id, view_count, is_examine, created_at, updated_at, 
+    status, comment_num, type, examine_result, content
+    from bbs_article
+  </select>
+</mapper>

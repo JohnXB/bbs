@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johnxb.bbs.dao.mapper.BbsCodeTableMapper">
+  <resultMap id="BaseResultMap" type="com.johnxb.bbs.entity.BbsCodeTable">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_key" jdbcType="VARCHAR" property="parentKey" />
+    <result column="key" jdbcType="INTEGER" property="key" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, parent_key, key, value
+    from bbs_code_table
+  </select>
+</mapper>

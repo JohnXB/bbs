@@ -87,12 +87,16 @@
             domainObjectName 给表对应的 model 起名字
             注意：大小写敏感问题。
          -->
-        <table tableName="%" >
+        <table tableName="bbs_%" enableInsert="false" enableSelectByPrimaryKey="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false">
+            <property name="constructorBased" value="false"/>
+
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+
             <!--用来修改表中某个列的属性,一个table元素中可以有多个columnOverride元素哈.
                 property属性来指定列要生成的属性名称.
              -->
             <!--<columnOverride column="username" property="userName" />-->
+
         </table>
 
         <!--<table tableName="person" domainObjectName="Person"/>-->

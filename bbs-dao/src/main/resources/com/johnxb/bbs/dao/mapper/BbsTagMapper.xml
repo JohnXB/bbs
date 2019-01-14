@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johnxb.bbs.dao.mapper.BbsTagMapper">
+  <resultMap id="BaseResultMap" type="com.johnxb.bbs.entity.BbsTag">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="icon" jdbcType="LONGVARBINARY" property="icon" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, tag_name, introduce, created_at, updated_at, icon
+    from bbs_tag
+  </select>
+</mapper>
