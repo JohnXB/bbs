@@ -7,10 +7,10 @@
         <result property="mail" column="mail"/>
         <result property="password" column="password"/>
         <result property="avatar" column="avatar"/>
-        <result property="register_at" column="register_at"/>
+        <result property="registerAt" column="register_at"/>
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
-        <result property="current_token" column="current_token"/>
+        <result property="currentToken" column="current_token"/>
         <result property="username" column="username"/>
         <collection property="roles" column="id" select="findRoleByUserId"/>
     </resultMap>
@@ -26,4 +26,14 @@
         LEFT join auth_user_roles aur ON aur.role_id = ar.id
         WHERE aur.user_id = #{id}
     </select>
+    <select id="selectBySignIn" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
+        SELECT nickname,current_token,avatar,password,id,username
+        FROM auth_user
+        WHERE username = #{username}
+    </select>
+    <update id="refreshToken" parameterType="com.johnxb.bbs.entity.AuthUser">
+        update auth_user
+        set current_token = #{currentToken}
+        WHERE id = #{id}
+    </update>
 </mapper>

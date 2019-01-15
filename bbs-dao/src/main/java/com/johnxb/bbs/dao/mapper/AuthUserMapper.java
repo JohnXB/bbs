@@ -12,4 +12,16 @@ public interface AuthUserMapper {
      */
     AuthUser selectByUsername(@Param("username") String username);
 
+    /**
+     * @param user
+     * @return user
+     */
+    AuthUser selectBySignIn(AuthUser user);
+
+    /**
+     * @param user
+     * @return true or false
+     */
+    Integer refreshToken(AuthUser user);
+
 }

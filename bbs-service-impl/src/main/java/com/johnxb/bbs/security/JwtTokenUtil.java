@@ -1,6 +1,5 @@
-package com.johnxb.bbs.api.security;
+package com.johnxb.bbs.security;
 
-import com.johnxb.bbs.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -86,8 +85,8 @@ public class JwtTokenUtil implements Serializable {
      */
     private Claims getClaimsFromToken(String token) {
         Claims claims;
-            try {
-                claims = Jwts.parser()
+        try {
+            claims = Jwts.parser()
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
@@ -112,8 +111,10 @@ public class JwtTokenUtil implements Serializable {
      * @param token
      * @return
      */
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
+        if (expiration == null)
+            return true;
         return expiration.before(new Date());
     }
 

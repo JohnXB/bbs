@@ -4,8 +4,8 @@
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES (1, '超级管理员', '408106378@qq.com', '1', NULL, '2019-01-11 10:42:26', b'1', '15922784248', NULL, 'root_admin');
-INSERT INTO `auth_user` VALUES (3, 'johnxiao', 'johnxiao@qq.com', '1', NULL, '2019-01-11 10:47:48', b'1', '13333333333', NULL, 'johnxiao');
+INSERT INTO `auth_user` VALUES (1, '超级管理员', '408106378@qq.com', '$2a$10$gQhX2Wqkp0n6yBA57m2RBuGAtyXnLMx4HF5amqtTSBq2y3moWEQ9q', NULL, '2019-01-11 10:42:26', b'1', '15922784248', NULL, 'root_admin');
+INSERT INTO `auth_user` VALUES (3, 'johnxiao', 'johnxiao@qq.com', '$2a$10$gQhX2Wqkp0n6yBA57m2RBuGAtyXnLMx4HF5amqtTSBq2y3moWEQ9q', NULL, '2019-01-11 10:47:48', b'1', '13333333333', NULL, 'johnxiao');
 
 
 -- ----------------------------
