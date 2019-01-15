@@ -34,7 +34,6 @@ public class AuthUserServiceImpl implements AuthUserService {
      */
     @Override
     public AuthUser findByUserName(String username) {
-//        测试数据
         AuthUser authUser = authUserMapper.selectByUsername(username);
         return authUser;
     }
@@ -52,6 +51,7 @@ public class AuthUserServiceImpl implements AuthUserService {
 //        user.setCurrentToken(generateToken(user));
 //        int id = authUserMapper.insert(user);
 //        userRolesMapper.insertUserRole(user.getId(), 2);
+        //Todo
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword().trim()));
         JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,7 +65,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         String pass = user.getPassword();
         user = authUserMapper.selectBySignIn(user);
         //密码验证,token生成与刷新
-        if (encoder.matches(pass, user.getPassword())) {
+        if (user != null && encoder.matches(pass, user.getPassword())) {
             String token = user.getCurrentToken();
             if (token == null || validate(token)) {
                 user.setCurrentToken(generateToken(user));
@@ -79,12 +79,15 @@ public class AuthUserServiceImpl implements AuthUserService {
     @Override
     public AuthUser currentUser() {
         JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        AuthUser user = authUserMapper.selectByPrimaryKey(jwtUser.getId());
-        //返回值待修改
-        return findByUserName("");
+        return findByUserName(jwtUser.getUsername());
     }
 
 
+    /**
+     * @param token
+     * @return
+     * @
+     */
     private Boolean validate(String token) {
         Date date;
         try {
