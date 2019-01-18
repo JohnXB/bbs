@@ -1,6 +1,6 @@
 package com.johnxb.bbs.dto.Auth;
 
-public class SignInOutDto extends ResponseDto {
+public class LogInOutputDto extends ResponseDto {
     private Integer id;
     private String username;
     private String currentToken;

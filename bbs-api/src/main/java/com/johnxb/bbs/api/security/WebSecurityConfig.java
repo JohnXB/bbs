@@ -66,8 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 .authorizeRequests()
-                //获取token接口
-                .antMatchers("/auth/login").permitAll()
+
+//                .antMatchers("/auth/userInfo").permitAll()
                 //公共服务
                 .antMatchers("/common/**").permitAll()
                 //swagger
@@ -92,7 +92,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/auth/login").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated();
+                .anyRequest().authenticated() .and()
+                .cors()
+                .and()
+                .csrf().disable();;
 
         // 禁用缓存
         httpSecurity.headers().cacheControl();
