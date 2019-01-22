@@ -9,4 +9,5 @@ include 'bbs-service-impl'
 findProject(':bbs-service-impl')?.name = 'bbs-service-impl'
 include 'bbs-entity'
 findProject(':bbs-entity')?.name = 'bbs-entity'
-
+include 'bbs-utils'
+findProject(':bbs-utils')?.name = 'bbs-utils'

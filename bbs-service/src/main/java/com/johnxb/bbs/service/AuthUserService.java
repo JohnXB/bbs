@@ -1,6 +1,7 @@
 package com.johnxb.bbs.service;
 
 import com.johnxb.bbs.entity.AuthUser;
+import com.johnxb.bbs.utils.exception.BusinessException;
 
 public interface AuthUserService {
 
@@ -10,13 +11,6 @@ public interface AuthUserService {
      * @author johnxiao
      */
     AuthUser findByUserName(String username);
-
-    /**
-     * @param user
-     * @return 注册结果
-     * @author johnxiao
-     */
-    boolean signUp(AuthUser user);
 
     /**
      * @param user(username,pass)
@@ -29,5 +23,10 @@ public interface AuthUserService {
      */
     AuthUser currentUser();
 
+    /**
+     * @param user
+     * @return 结果
+     */
+    String register(AuthUser user) throws BusinessException;
 
 }

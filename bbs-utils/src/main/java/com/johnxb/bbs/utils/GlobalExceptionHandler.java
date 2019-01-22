@@ -1,11 +1,9 @@
-package com.johnxb.bbs.api.utils;
+package com.johnxb.bbs.utils;
 
-import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
+import com.johnxb.bbs.utils.exception.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletException;
 
 @RestController
 @RestControllerAdvice

@@ -1,4 +1,4 @@
-package com.johnxb.bbs.api.utils;
+package com.johnxb.bbs.utils;
 
 
 import org.dozer.DozerBeanMapperBuilder;

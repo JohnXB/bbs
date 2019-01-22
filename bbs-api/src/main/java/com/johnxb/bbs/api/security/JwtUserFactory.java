@@ -1,7 +1,7 @@
 package com.johnxb.bbs.api.security;
 
-import com.johnxb.bbs.security.JwtUser;
 import com.johnxb.bbs.entity.AuthUser;
+import com.johnxb.bbs.utils.security.JwtUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

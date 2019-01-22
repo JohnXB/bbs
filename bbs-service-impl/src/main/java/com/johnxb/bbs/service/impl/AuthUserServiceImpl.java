@@ -1,13 +1,18 @@
 package com.johnxb.bbs.service.impl;
 
-import com.johnxb.bbs.security.JwtTokenUtil;
-import com.johnxb.bbs.security.JwtUser;
 import com.johnxb.bbs.dao.mapper.AuthUserMapper;
+import com.johnxb.bbs.dao.mapper.AuthUserRolesMapper;
 import com.johnxb.bbs.entity.AuthUser;
+import com.johnxb.bbs.entity.AuthUserRoles;
+import com.johnxb.bbs.enumeration.DuplicateKeyExceptionEnum;
 import com.johnxb.bbs.service.AuthUserService;
+import com.johnxb.bbs.utils.exception.BusinessException;
+import com.johnxb.bbs.utils.security.JwtTokenUtil;
+import com.johnxb.bbs.utils.security.JwtUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,11 +26,13 @@ public class AuthUserServiceImpl implements AuthUserService {
 
     private final AuthUserMapper authUserMapper;
     private final JwtTokenUtil jwtTokenUtil;
+    private final AuthUserRolesMapper authUserRolesMapper;
 
     @Autowired
-    public AuthUserServiceImpl(AuthUserMapper authUserMapper, JwtTokenUtil jwtTokenUtil) {
+    public AuthUserServiceImpl(AuthUserMapper authUserMapper, JwtTokenUtil jwtTokenUtil, AuthUserRolesMapper authUserRolesMapper) {
         this.authUserMapper = authUserMapper;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.authUserRolesMapper = authUserRolesMapper;
     }
 
     /**
@@ -36,27 +43,6 @@ public class AuthUserServiceImpl implements AuthUserService {
     public AuthUser findByUserName(String username) {
         AuthUser authUser = authUserMapper.selectByUsername(username);
         return authUser;
-    }
-
-    @Override
-    public boolean signUp(AuthUser user) {
-//        List<String> usernameList = authUserMapper.checkByUsername(user.getUsername());
-//        if (usernameList.size() > 0) {
-//            return false;
-//        }
-//        user.setAvatar("aaa");
-////        加密
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        user.setPassword(encoder.encode(user.getPassword().trim()));
-//        user.setCurrentToken(generateToken(user));
-//        int id = authUserMapper.insert(user);
-//        userRolesMapper.insertUserRole(user.getId(), 2);
-        //Todo
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword().trim()));
-        JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return 1 > 0;
-
     }
 
     @Override
@@ -76,18 +62,47 @@ public class AuthUserServiceImpl implements AuthUserService {
         return null;
     }
 
+    //当前用户
     @Override
     public AuthUser currentUser() {
         JwtUser jwtUser = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return findByUserName(jwtUser.getUsername());
     }
 
+    //注册
+    @Override
+    public String register(AuthUser user) throws BusinessException {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword().trim()));
+
+        try {
+            authUserMapper.register(user);
+        } catch (DuplicateKeyException e) {
+            String message = e.getCause().getMessage();
+            message =  message.substring(message.lastIndexOf(" ") + 1).replace("'", "");
+            if (message.equals(DuplicateKeyExceptionEnum.PHONE.getValue()))
+                throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.PHONE.getName() + "已被占用");
+            else if (message.equals(DuplicateKeyExceptionEnum.MAIL.getValue()))
+                throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.MAIL.getName() + "已被占用");
+            else if (message.equals(DuplicateKeyExceptionEnum.USERNAME.getValue()))
+                throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.USERNAME.getName() + "已被占用");
+            throw  new BusinessException("注册失败");
+
+        }
+
+        Integer result = authUserRolesMapper.insertUserRole(user.getId(), 1);
+        if (result > 0)
+            return "注册成功";
+        //添加用户角色关系；
+        return "注册失败";
+    }
 
     /**
      * @param token
      * @return
      * @
      */
+
     private Boolean validate(String token) {
         Date date;
         try {

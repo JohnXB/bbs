@@ -1,4 +1,4 @@
-package com.johnxb.bbs.api.utils;
+package com.johnxb.bbs.utils.exception;
 
 public class BusinessException extends Exception {
 

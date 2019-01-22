@@ -1,0 +1,6 @@
+jwt:
+  header: Authorization
+  secret: "secret"
+  expiration: 604800
+  tokenHead: "Bearer "
+  exceptUrl: "/**"

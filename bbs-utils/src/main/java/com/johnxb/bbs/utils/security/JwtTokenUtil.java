@@ -1,4 +1,4 @@
-package com.johnxb.bbs.security;
+package com.johnxb.bbs.utils.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

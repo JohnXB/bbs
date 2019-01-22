@@ -16,7 +16,7 @@ public class AuthUser {
 
     private Date registerAt;
 
-    private String gender;
+    private boolean gender;
 
     private String phone;
 
@@ -26,7 +26,7 @@ public class AuthUser {
 
     private List<String> roles;
 
-    public AuthUser(Integer id, String nickname, String mail, String password, String avatar, Date registerAt, String gender, String phone, String currentToken, String username) {
+    public AuthUser(Integer id, String nickname, String mail, String password, String avatar, Date registerAt, boolean gender, String phone, String currentToken, String username) {
         this.id = id;
         this.nickname = nickname;
         this.mail = mail;
@@ -91,12 +91,12 @@ public class AuthUser {
         this.registerAt = registerAt;
     }
 
-    public String getGender() {
+    public boolean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public String getPhone() {

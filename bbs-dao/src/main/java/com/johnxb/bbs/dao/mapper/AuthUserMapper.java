@@ -24,4 +24,15 @@ public interface AuthUserMapper {
      */
     Integer refreshToken(AuthUser user);
 
+    /**
+     * @param user
+     * @return true or false
+     */
+    Integer register(AuthUser user);
+
+//    /**
+//     * @param username
+//     * @return true or false
+//     */
+//    Integer checkUsername(@Param("username") String username);
 }

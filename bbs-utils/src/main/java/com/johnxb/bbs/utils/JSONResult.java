@@ -1,4 +1,4 @@
-package com.johnxb.bbs.api.utils;
+package com.johnxb.bbs.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
