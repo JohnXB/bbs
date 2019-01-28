@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -21,7 +23,7 @@ public class CommonController {
     private final TagService tagService;
 
     @Autowired
-    public CommonController(TagService tagService){
+    public CommonController(TagService tagService) {
         this.tagService = tagService;
     }
 
@@ -36,8 +38,9 @@ public class CommonController {
     @RequestMapping(value = "/tags", method = RequestMethod.GET)
     public JSONResult<List<TagsOutputDto>> tags() {
         JSONResult<List<TagsOutputDto>> jsonResult = new JSONResult();
-        List<BbsTag> tags= tagService.getTagList();
-        List<TagsOutputDto> tagsOutputDtos = BeanMapper.mapList(tags,TagsOutputDto.class);
+        List<BbsTag> tags = tagService.getTagList();
+
+        List<TagsOutputDto> tagsOutputDtos = BeanMapper.mapList(tags, TagsOutputDto.class);
         jsonResult.setData(tagsOutputDtos);
         return jsonResult;
     }
