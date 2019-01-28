@@ -3,7 +3,6 @@ package com.johnxb.bbs.service.impl;
 import com.johnxb.bbs.dao.mapper.AuthUserMapper;
 import com.johnxb.bbs.dao.mapper.AuthUserRolesMapper;
 import com.johnxb.bbs.entity.AuthUser;
-import com.johnxb.bbs.entity.AuthUserRoles;
 import com.johnxb.bbs.enumeration.DuplicateKeyExceptionEnum;
 import com.johnxb.bbs.service.AuthUserService;
 import com.johnxb.bbs.utils.exception.BusinessException;
@@ -79,20 +78,24 @@ public class AuthUserServiceImpl implements AuthUserService {
             authUserMapper.register(user);
         } catch (DuplicateKeyException e) {
             String message = e.getCause().getMessage();
-            message =  message.substring(message.lastIndexOf(" ") + 1).replace("'", "");
+            message = message.substring(message.lastIndexOf(" ") + 1).replace("'", "");
             if (message.equals(DuplicateKeyExceptionEnum.PHONE.getValue()))
                 throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.PHONE.getName() + "已被占用");
             else if (message.equals(DuplicateKeyExceptionEnum.MAIL.getValue()))
                 throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.MAIL.getName() + "已被占用");
             else if (message.equals(DuplicateKeyExceptionEnum.USERNAME.getValue()))
                 throw new BusinessException("注册失败:" + DuplicateKeyExceptionEnum.USERNAME.getName() + "已被占用");
-            throw  new BusinessException("注册失败");
+            throw new BusinessException("注册失败");
 
         }
+        try {
+            Integer result = authUserRolesMapper.insertUserRole(user.getId(), 1);
+            if (result > 0)
+                return "注册成功";
+        } catch (Exception e) {
+            return "注册失败";
+        }
 
-        Integer result = authUserRolesMapper.insertUserRole(user.getId(), 1);
-        if (result > 0)
-            return "注册成功";
         //添加用户角色关系；
         return "注册失败";
     }
@@ -100,7 +103,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * @param token
      * @return
-     * @
+     * 验证token是否过期
      */
 
     private Boolean validate(String token) {
@@ -119,6 +122,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * @param user
      * @return token
+     * 生成token
      */
     private String generateToken(AuthUser user) {
         return Jwts.builder()

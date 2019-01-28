@@ -43,9 +43,9 @@ public class AuthController extends BaseController {
 
     @ApiOperation(value = "注册", notes = "用户注册", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public JSONResult register(@RequestBody RegisterDto registerDto) throws BusinessException{
+    public JSONResult register(@RequestBody @Valid RegisterDto registerDto) throws BusinessException {
         JSONResult jsonResult = new JSONResult();
-        AuthUser authUser = BeanMapper.map(registerDto,AuthUser.class);
+        AuthUser authUser = BeanMapper.map(registerDto, AuthUser.class);
         String message = authUserService.register(authUser);
         jsonResult.setMessage(message);
         return jsonResult;

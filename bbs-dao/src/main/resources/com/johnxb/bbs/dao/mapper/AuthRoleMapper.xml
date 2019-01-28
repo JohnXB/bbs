@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.johnxb.bbs.dao.mapper.AuthRoleMapper">
-  <resultMap id="BaseResultMap" type="com.johnxb.bbs.entity.AuthRole">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role_code" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from auth_role
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.johnxb.bbs.entity.AuthRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into auth_role (role_name, role_code)
-    values (#{roleName,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.johnxb.bbs.entity.AuthRole">
-    update auth_role
-    set role_name = #{roleName,jdbcType=VARCHAR},
-      role_code = #{roleCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, role_name, role_code
-    from auth_role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, role_name, role_code
-    from auth_role
-  </select>
+    <resultMap id="BaseResultMap" type="com.johnxb.bbs.entity.AuthRole">
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
 </mapper>
