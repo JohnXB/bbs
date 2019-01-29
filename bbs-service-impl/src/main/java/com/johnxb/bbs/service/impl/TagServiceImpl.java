@@ -19,7 +19,13 @@ public class TagServiceImpl implements TagService {
         this.bbsTagMapper = bbsTagMapper;
     }
 
+    @Override
     public List<BbsTag> getTagList() {
         return bbsTagMapper.selectAll();
+    }
+
+    @Override
+    public BbsTag getTagById(Integer tagId) {
+        return bbsTagMapper.selectById(tagId);
     }
 }

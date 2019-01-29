@@ -13,4 +13,10 @@
       select id, tag_name, icon
       from bbs_tag
     </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select id, tag_name, introduce
+        from bbs_tag
+        WHERE id =#{tagId}
+    </select>
 </mapper>
