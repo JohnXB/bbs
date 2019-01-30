@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,9 +51,16 @@ public class CommonController {
     @RequestMapping(value = "/tag/{tagId}", method = RequestMethod.GET)
     public JSONResult<TagOutputDto> tag(@PathVariable @NotNull(message = "标签id不能为空") Integer tagId) throws BusinessException {
         JSONResult<TagOutputDto> jsonResult = new JSONResult<>();
-        // 获取数据+数据转换
+        // 获取数据+数据转换+异常处理
         TagOutputDto tagOutputDto = BeanMapper.map(Optional.ofNullable(this.tagService.getTagById(tagId)).orElseThrow(() -> new BusinessException("无对应标签")), TagOutputDto.class);
         jsonResult.setData(tagOutputDto);
+        return jsonResult;
+    }
+
+    @ApiOperation(value = "首页文章", notes = "根据tag获取文章")
+    @RequestMapping(value = "/tag/{tagId}/articles", method = RequestMethod.GET)
+    public JSONResult getArticlesByTag(@PathVariable Integer tagId) {
+        JSONResult jsonResult = new JSONResult();
         return jsonResult;
     }
 }

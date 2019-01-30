@@ -43,12 +43,31 @@ public class AuthUserServiceImpl implements AuthUserService {
         AuthUser authUser = authUserMapper.selectByUsername(username);
         return authUser;
     }
-
+    // 用户登录
     @Override
-    public AuthUser signIn(AuthUser user) {
+    public AuthUser login(AuthUser user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String pass = user.getPassword();
-        user = authUserMapper.selectBySignIn(user);
+        user = authUserMapper.selectByLogin(user);
+        //密码验证,token生成与刷新
+        if (user != null && encoder.matches(pass, user.getPassword())) {
+            String token = user.getCurrentToken();
+            //token验证不为空或者未过期
+            if (token == null || validate(token)) {
+                //刷新token
+                user.setCurrentToken(generateToken(user));
+            }
+            authUserMapper.refreshToken(user);
+            return user;
+        }
+        return null;
+    }
+    // 管理员登录
+    @Override
+    public AuthUser adminLogin(AuthUser user) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String pass = user.getPassword();
+        user = authUserMapper.selectByAdminLogin(user);
         //密码验证,token生成与刷新
         if (user != null && encoder.matches(pass, user.getPassword())) {
             String token = user.getCurrentToken();
@@ -60,7 +79,6 @@ public class AuthUserServiceImpl implements AuthUserService {
         }
         return null;
     }
-
     //当前用户
     @Override
     public AuthUser currentUser() {

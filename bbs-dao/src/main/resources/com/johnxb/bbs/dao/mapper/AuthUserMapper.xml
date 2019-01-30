@@ -26,10 +26,18 @@
         LEFT join auth_user_roles aur ON aur.role_id = ar.id
         WHERE aur.user_id = #{id}
     </select>
-    <select id="selectBySignIn" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
-        SELECT nickname,current_token,avatar,password,id,username
-        FROM auth_user
-        WHERE username = #{username}
+    <select id="selectByLogin" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
+        SELECT nickname,current_token,avatar,password,au.id,username
+        FROM auth_user au
+        LEFT JOIN auth_user_roles aur ON au.id = aur.user_id
+        WHERE au.username = #{username} AND  aur.role_id = 1
+    </select>
+    <select id="selectByAdminLogin" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
+        SELECT nickname,current_token,avatar,password,au.id,username
+        FROM auth_user au
+        LEFT JOIN auth_user_roles aur ON au.id = aur.user_id
+        --    验证是否是管理员角色
+        WHERE au.username = #{username} AND  (aur.role_id = 2 or aur.role_id = 3)
     </select>
     <update id="refreshToken" parameterType="com.johnxb.bbs.entity.AuthUser">
         update auth_user
@@ -45,8 +53,8 @@
     </insert>
     <!--&lt;!&ndash;检查用户名是否重复&ndash;&gt;-->
     <!--<select id="checkUsername" resultType="java.lang.Integer">-->
-        <!--SELECT count(id)-->
-        <!--FROM auth_user-->
-        <!--WHERE username = #{username}-->
+    <!--SELECT count(id)-->
+    <!--FROM auth_user-->
+    <!--WHERE username = #{username}-->
     <!--</select>-->
 </mapper>

@@ -15,8 +15,16 @@ public interface AuthUserMapper {
     /**
      * @param user
      * @return user
+     * 用户登录
      */
-    AuthUser selectBySignIn(AuthUser user);
+    AuthUser selectByLogin(AuthUser user);
+
+    /**
+     * @param user
+     * @return
+     * 管理员登陆
+     */
+    AuthUser selectByAdminLogin(AuthUser user);
 
     /**
      * @param user

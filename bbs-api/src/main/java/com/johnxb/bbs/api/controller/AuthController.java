@@ -33,9 +33,9 @@ public class AuthController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JSONResult<LogInOutputDto> login(@Valid @RequestBody LogInDto logInDto) throws BusinessException {
         JSONResult<LogInOutputDto> jsonResult = new JSONResult<>();
-        AuthUser user = authUserService.signIn(BeanMapper.map(logInDto, AuthUser.class));
+        AuthUser user = authUserService.login(BeanMapper.map(logInDto, AuthUser.class));
         if (user == null) {
-            throw new BusinessException("用户名或密码错误");
+            throw new BusinessException("用户名或密码错误,请重试");
         }
         jsonResult.setData(BeanMapper.map(user, LogInOutputDto.class));
         return jsonResult;

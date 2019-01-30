@@ -16,8 +16,13 @@ public interface AuthUserService {
      * @param user(username,pass)
      * @return 用户
      */
-    AuthUser signIn(AuthUser user);
+    AuthUser login(AuthUser user);
 
+    /**
+     * @param user
+     * @return 管理员
+     */
+    AuthUser adminLogin(AuthUser user);
     /**
      * @return 当前用户
      */

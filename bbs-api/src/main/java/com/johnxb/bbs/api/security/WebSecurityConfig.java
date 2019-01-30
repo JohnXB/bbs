@@ -91,6 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/auth/login").permitAll()
+                // 管理员登陆接口
+                .antMatchers("/admin/login").permitAll()
                 // 注册
                 .antMatchers("/auth/register").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
