@@ -2,8 +2,8 @@ package com.johnxb.bbs.api.controller;
 
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
-import com.johnxb.bbs.dto.Auth.LogInDto;
-import com.johnxb.bbs.dto.Auth.LogInOutputDto;
+import com.johnxb.bbs.dto.Auth.LoginDto;
+import com.johnxb.bbs.dto.Auth.LoginOutputDto;
 import com.johnxb.bbs.dto.Auth.RegisterDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.service.AuthUserService;
@@ -31,13 +31,13 @@ public class AuthController extends BaseController {
 
     @ApiOperation(value = "用户登录", notes = "用户登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JSONResult<LogInOutputDto> login(@Valid @RequestBody LogInDto logInDto) throws BusinessException {
-        JSONResult<LogInOutputDto> jsonResult = new JSONResult<>();
-        AuthUser user = authUserService.login(BeanMapper.map(logInDto, AuthUser.class));
+    public JSONResult<LoginOutputDto> login(@Valid @RequestBody LoginDto loginDto) throws BusinessException {
+        JSONResult<LoginOutputDto> jsonResult = new JSONResult<>();
+        AuthUser user = authUserService.login(BeanMapper.map(loginDto, AuthUser.class));
         if (user == null) {
             throw new BusinessException("用户名或密码错误,请重试");
         }
-        jsonResult.setData(BeanMapper.map(user, LogInOutputDto.class));
+        jsonResult.setData(BeanMapper.map(user, LoginOutputDto.class));
         return jsonResult;
     }
 
@@ -54,13 +54,13 @@ public class AuthController extends BaseController {
     @PreAuthorize("hasRole('USER')")
     @ApiOperation(value = "用户信息获取", notes = "用户信息获取", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/userInfo", method = RequestMethod.POST)
-    public JSONResult<LogInOutputDto> getUserInfo() throws Exception {
-        JSONResult<LogInOutputDto> jsonResult = new JSONResult<>();
+    public JSONResult<LoginOutputDto> getUserInfo() throws Exception {
+        JSONResult<LoginOutputDto> jsonResult = new JSONResult<>();
         AuthUser user = currentUser();
         if (user == null) {
             throw new BusinessException("登录信息已过期，请重新登陆");
         }
-        jsonResult.setData(BeanMapper.map(user, LogInOutputDto.class));
+        jsonResult.setData(BeanMapper.map(user, LoginOutputDto.class));
         return jsonResult;
     }
 

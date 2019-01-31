@@ -1,27 +1,22 @@
-package com.johnxb.bbs.entity;
+package com.johnxb.bbs.dto.Common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.johnxb.bbs.dto.ResponseDto;
 
 import java.util.Date;
 
-public class BbsArticle {
+public class GetArticleOutputDto extends ResponseDto {
     private Integer id;
 
     private String title;
 
-    private Integer userId;
-
-    private Integer tagId;
+    private String username;
 
     private Integer viewCount;
 
-    private Boolean isExamine;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
-    private Date createdAt;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatedAt;
+
     // 状态 0为未审核 1为审核完成 2为推荐
     private Integer status;
 
@@ -29,11 +24,7 @@ public class BbsArticle {
 
     private Boolean type;
 
-    private String examineResult;
-
     private String content;
-
-    private String username;
 
     public Integer getId() {
         return id;
@@ -48,23 +39,15 @@ public class BbsArticle {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getViewCount() {
@@ -73,22 +56,6 @@ public class BbsArticle {
 
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
-    }
-
-    public Boolean getIsExamine() {
-        return isExamine;
-    }
-
-    public void setIsExamine(Boolean isExamine) {
-        this.isExamine = isExamine;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
@@ -123,27 +90,11 @@ public class BbsArticle {
         this.type = type;
     }
 
-    public String getExamineResult() {
-        return examineResult;
-    }
-
-    public void setExamineResult(String examineResult) {
-        this.examineResult = examineResult == null ? null : examineResult.trim();
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        this.content = content;
     }
 }

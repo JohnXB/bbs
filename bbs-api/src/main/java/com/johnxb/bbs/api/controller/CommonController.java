@@ -1,8 +1,12 @@
 package com.johnxb.bbs.api.controller;
 
+import com.johnxb.bbs.dto.Common.GetArticleDto;
+import com.johnxb.bbs.dto.Common.GetArticleOutputDto;
 import com.johnxb.bbs.dto.Common.TagOutputDto;
 import com.johnxb.bbs.dto.Common.TagsOutputDto;
+import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.entity.BbsTag;
+import com.johnxb.bbs.service.ArticleService;
 import com.johnxb.bbs.service.TagService;
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
@@ -23,10 +27,12 @@ import java.util.Optional;
 @RequestMapping(value = "/common")
 public class CommonController {
     private final TagService tagService;
+    private final ArticleService articleService;
 
     @Autowired
-    public CommonController(TagService tagService) {
+    public CommonController(TagService tagService, ArticleService articleService) {
         this.tagService = tagService;
+        this.articleService = articleService;
     }
 
 
@@ -57,10 +63,16 @@ public class CommonController {
         return jsonResult;
     }
 
-    @ApiOperation(value = "首页文章", notes = "根据tag获取文章")
+    @ApiOperation(value = "文章获取", notes = "根据tag获取文章")
     @RequestMapping(value = "/tag/{tagId}/articles", method = RequestMethod.GET)
-    public JSONResult getArticlesByTag(@PathVariable Integer tagId) {
-        JSONResult jsonResult = new JSONResult();
+    public JSONResult<List<GetArticleOutputDto>> getArticlesByTag(@PathVariable Integer tagId, GetArticleDto getArticleDto) {
+        JSONResult<List<GetArticleOutputDto>> jsonResult = new JSONResult();
+        // dto空值判断
+        getArticleDto.setPage(Optional.ofNullable(getArticleDto.getPage()).orElse(1));
+        getArticleDto.setPageSize(Optional.ofNullable(getArticleDto.getPageSize()).orElse(20));
+        getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(0));
+        List<BbsArticle> bbsArticles = this.articleService.getArticleByTag(tagId, getArticleDto);
+        jsonResult.setData(BeanMapper.mapList(bbsArticles,GetArticleOutputDto.class));
         return jsonResult;
     }
 }

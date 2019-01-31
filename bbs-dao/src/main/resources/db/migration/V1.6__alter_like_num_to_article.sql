@@ -1,0 +1,1 @@
+alter TABLE bbs_article add column like_num int(11) not null default 0;

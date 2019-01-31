@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 
-public class LogInDto extends RequestDto {
+public class LoginDto extends RequestDto {
     /**
      * 用户名
      */

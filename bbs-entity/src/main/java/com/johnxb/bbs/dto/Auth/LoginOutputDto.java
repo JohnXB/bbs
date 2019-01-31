@@ -2,7 +2,7 @@ package com.johnxb.bbs.dto.Auth;
 
 import com.johnxb.bbs.dto.ResponseDto;
 
-public class LogInOutputDto extends ResponseDto {
+public class LoginOutputDto extends ResponseDto {
     private Integer id;
     private String username;
     private String currentToken;

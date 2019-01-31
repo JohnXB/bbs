@@ -1,7 +1,7 @@
 package com.johnxb.bbs.api.controller;
 
-import com.johnxb.bbs.dto.Auth.LogInDto;
-import com.johnxb.bbs.dto.Auth.LogInOutputDto;
+import com.johnxb.bbs.dto.Auth.LoginDto;
+import com.johnxb.bbs.dto.Auth.LoginOutputDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.service.AuthUserService;
 import com.johnxb.bbs.utils.BeanMapper;
@@ -31,13 +31,13 @@ public class AdminController {
 
     @ApiOperation(value = "管理员登录", notes = "管理员登录", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JSONResult<LogInOutputDto> adminLogin(@Valid @RequestBody LogInDto logInDto) throws BusinessException {
-        JSONResult<LogInOutputDto> jsonResult = new JSONResult<>();
-        AuthUser user = authUserService.adminLogin(BeanMapper.map(logInDto, AuthUser.class));
+    public JSONResult<LoginOutputDto> adminLogin(@Valid @RequestBody LoginDto loginDto) throws BusinessException {
+        JSONResult<LoginOutputDto> jsonResult = new JSONResult<>();
+        AuthUser user = authUserService.adminLogin(BeanMapper.map(loginDto, AuthUser.class));
         if (user == null) {
             throw new BusinessException("用户名或密码错误,请重试");
         }
-        jsonResult.setData(BeanMapper.map(user, LogInOutputDto.class));
+        jsonResult.setData(BeanMapper.map(user, LoginOutputDto.class));
         return jsonResult;
     }
 }
