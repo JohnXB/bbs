@@ -1,9 +1,6 @@
 package com.johnxb.bbs.api.controller;
 
-import com.johnxb.bbs.dto.Common.GetArticleDto;
-import com.johnxb.bbs.dto.Common.GetArticleOutputDto;
-import com.johnxb.bbs.dto.Common.TagOutputDto;
-import com.johnxb.bbs.dto.Common.TagsOutputDto;
+import com.johnxb.bbs.dto.Common.*;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.entity.BbsTag;
 import com.johnxb.bbs.service.ArticleService;
@@ -72,7 +69,16 @@ public class CommonController {
         getArticleDto.setPageSize(Optional.ofNullable(getArticleDto.getPageSize()).orElse(20));
         getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(0));
         List<BbsArticle> bbsArticles = this.articleService.getArticleByTag(tagId, getArticleDto);
-        jsonResult.setData(BeanMapper.mapList(bbsArticles,GetArticleOutputDto.class));
+        jsonResult.setData(BeanMapper.mapList(bbsArticles, GetArticleOutputDto.class));
+        return jsonResult;
+    }
+
+    @ApiOperation(value = "文章详细信息获取", notes = "根据文章id访问文章")
+    @RequestMapping(value = "/article/{articleId}", method = RequestMethod.GET)
+    public JSONResult<ArticleInfoDto> getArticleInfo(@PathVariable Integer articleId) throws BusinessException {
+        JSONResult<ArticleInfoDto> jsonResult = new JSONResult<>();
+        BbsArticle bbsArticle = Optional.ofNullable(this.articleService.getArticleInfoById(articleId)).orElseThrow(() -> new BusinessException("未找到文章！"));
+        jsonResult.setData(BeanMapper.map(bbsArticle,ArticleInfoDto.class));
         return jsonResult;
     }
 }

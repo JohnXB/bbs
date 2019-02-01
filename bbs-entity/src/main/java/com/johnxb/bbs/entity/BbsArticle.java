@@ -3,6 +3,7 @@ package com.johnxb.bbs.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class BbsArticle {
     private Integer id;
@@ -33,7 +34,16 @@ public class BbsArticle {
 
     private String content;
 
+    private Integer likeNum;
+    /**
+     * 用户名字段
+     */
     private String username;
+
+    /**
+     * 评论(一级评论)
+     */
+    private List<BbsComment> comments;
 
     public Integer getId() {
         return id;
@@ -145,5 +155,21 @@ public class BbsArticle {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public List<BbsComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<BbsComment> comments) {
+        this.comments = comments;
     }
 }

@@ -23,7 +23,7 @@ drop table if exists bbs_user_extend;
 /*==============================================================*/
 create table bbs_admin_log
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    admin_id             int(11) not null,
    action               varchar(20) not null,
    created_at           timestamp not null default CURRENT_TIMESTAMP,
@@ -62,7 +62,7 @@ alter table bbs_article comment '文章或问题表';
 /*==============================================================*/
 create table bbs_code_table
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    parent_key           varchar(20) not null,
    `key`                  int(11) not null,
    `value`               varchar(10) not null,
@@ -76,7 +76,7 @@ alter table bbs_code_table comment '码表';
 /*==============================================================*/
 create table bbs_collection
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    user_id              int(11) not null,
    article_id           int(11) not null,
    created_at           timestamp not null,
@@ -90,7 +90,7 @@ alter table bbs_collection comment '收藏表';
 /*==============================================================*/
 create table bbs_comment
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    content              text not null,
    created_at           timestamp not null default CURRENT_TIMESTAMP,
    like_num             int(11) not null default 0,
@@ -121,7 +121,7 @@ alter table bbs_follow comment '关注表';
 /*==============================================================*/
 create table bbs_like
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    belong_id            int(11) not null,
    user_id              int(11) not null,
    created_at           timestamp not null default CURRENT_TIMESTAMP,
@@ -136,7 +136,7 @@ alter table bbs_like comment '点赞表';
 /*==============================================================*/
 create table bbs_message
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    user_id              int(11) not null,
    message_type         tinyint(1) not null comment '消息type，对应码表，parent_id: MESSAGE_TYPE,1表示新的回复，2表示新的关注，3表示关注的人发布新消息',
    content              varchar(50) not null,
@@ -168,7 +168,7 @@ alter table bbs_tag comment '标签表';
 /*==============================================================*/
 create table bbs_user_extend
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    user_id              int(11) not null,
    message_time         timestamp not null default CURRENT_TIMESTAMP comment '最后一次获取消息时间',
    primary key (id)

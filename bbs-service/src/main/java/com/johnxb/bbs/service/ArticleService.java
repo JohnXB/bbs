@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ArticleService {
     List<BbsArticle> getArticleByTag(Integer tagId, GetArticleDto getArticleDto);
+
+    BbsArticle getArticleInfoById(Integer ariticleId);
 }

@@ -5,7 +5,6 @@ import com.johnxb.bbs.dto.Common.GetArticleDto;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,5 +26,10 @@ public class ArticleServiceImpl implements ArticleService {
         getArticleDto.setPage((getArticleDto.getPage() - 1) * getArticleDto.getPageSize());
         List<BbsArticle> list = this.bbsArticleMapper.getArticleByTag(tagId, getArticleDto);
         return list;
+    }
+
+    @Override
+    public BbsArticle getArticleInfoById(Integer ariticleId) {
+        return this.bbsArticleMapper.getArticleInfoById(ariticleId);
     }
 }

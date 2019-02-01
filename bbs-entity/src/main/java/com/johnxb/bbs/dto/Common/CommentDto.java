@@ -1,21 +1,16 @@
-package com.johnxb.bbs.entity;
+package com.johnxb.bbs.dto.Common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.johnxb.bbs.dto.ResponseDto;
 
 import java.util.Date;
-import java.util.List;
 
-public class BbsComment {
+public class CommentDto extends ResponseDto{
     private Integer id;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
 
     private Integer likeNum;
-
-    private Integer articleId;
-
-    private Integer parentId;
 
     private Integer floor;
 
@@ -23,11 +18,7 @@ public class BbsComment {
 
     private Integer userId;
 
-    private Integer toUserId;
-
     private String username;
-
-    private String toUsername;
 
     private Integer comment_num;
 
@@ -55,22 +46,6 @@ public class BbsComment {
         this.likeNum = likeNum;
     }
 
-    public Integer getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
     public Integer getFloor() {
         return floor;
     }
@@ -84,15 +59,7 @@ public class BbsComment {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Integer getComment_num() {
-        return comment_num;
-    }
-
-    public void setComment_num(Integer comment_num) {
-        this.comment_num = comment_num;
+        this.content = content;
     }
 
     public Integer getUserId() {
@@ -103,14 +70,6 @@ public class BbsComment {
         this.userId = userId;
     }
 
-    public Integer getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(Integer toUserId) {
-        this.toUserId = toUserId;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -119,11 +78,11 @@ public class BbsComment {
         this.username = username;
     }
 
-    public String getToUsername() {
-        return toUsername;
+    public Integer getComment_num() {
+        return comment_num;
     }
 
-    public void setToUsername(String toUsername) {
-        this.toUsername = toUsername;
+    public void setComment_num(Integer comment_num) {
+        this.comment_num = comment_num;
     }
 }

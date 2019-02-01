@@ -16,10 +16,11 @@
         <result column="examine_result" jdbcType="VARCHAR" property="examineResult"/>
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="username" property="username"/>
+        <result column="like_num" property="likeNum"/>
     </resultMap>
     <!--通过tag获取文章列表-->
     <select id="getArticleByTag" resultMap="BaseResultMap">
-        SELECT ba.title,au.username,ba.content,ba.view_count,ba.comment_num,ba.updated_at,ba.id,ba.type,ba.status
+        SELECT ba.title,au.username,ba.content,ba.view_count,ba.comment_num,ba.updated_at,ba.id,ba.type,ba.status,ba.like_num
         FROM bbs_article ba
         LEFT JOIN auth_user au ON au.id = ba.user_id
         LEFT JOIN bbs_tag bt on bt.id = ba.tag_id
@@ -39,5 +40,31 @@
             ORDER BY ba.updated_at desc
         </if>
         limit #{articleQuery.page},#{articleQuery.pageSize}
+    </select>
+
+
+    <resultMap id="ArticleInfoMap" type="com.johnxb.bbs.entity.BbsArticle">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="is_examine" jdbcType="BIT" property="isExamine"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="comment_num" jdbcType="INTEGER" property="commentNum"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="examine_result" jdbcType="VARCHAR" property="examineResult"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="username" property="username"/>
+        <result column="like_num" property="likeNum"/>
+        <collection property="comments" column="id" select="com.johnxb.bbs.dao.mapper.BbsCommentMapper.findCommentsByArticleId"/>
+    </resultMap>
+    <select id="getArticleInfoById" resultMap="ArticleInfoMap">
+        SELECT ba.title,ba.content,ba.created_at,ba.view_count,ba.comment_num,au.username,ba.like_num,ba.id,ba.type
+        FROM bbs_article ba
+        LEFT JOIN auth_user au ON au.id = ba.user_id
+        WHERE ba.is_examine = true AND ba.id = #{articleId}
     </select>
 </mapper>
