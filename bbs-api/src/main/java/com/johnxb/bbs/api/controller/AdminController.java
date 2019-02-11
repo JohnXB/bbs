@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RestController
 @Api(description = "管理员api")
 @RequestMapping(value = "/admin")
-public class AdminController {
+public class AdminController extends BaseController{
     private final AuthUserService authUserService;
 
     @Autowired
