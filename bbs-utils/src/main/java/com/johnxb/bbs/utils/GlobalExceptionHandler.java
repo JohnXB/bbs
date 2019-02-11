@@ -1,6 +1,7 @@
 package com.johnxb.bbs.utils;
 
 import com.johnxb.bbs.utils.exception.BusinessException;
+import com.johnxb.bbs.utils.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
@@ -13,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ */
 @RestController
 @RestControllerAdvice
 @CrossOrigin
@@ -62,6 +66,22 @@ public class GlobalExceptionHandler{
         JSONResult jsonResult = new JSONResult();
         jsonResult.setErrCode("VALIDATION_ERROR");
         jsonResult.setMessage(errorList);
+        return jsonResult;
+    }
+
+
+    /**
+     * @param e 未找到异常
+     * @return
+     * 未找到异常统一处理
+     */
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    JSONResult handleNotFoundException(NotFoundException e) {
+        JSONResult jsonResult = new JSONResult();
+        jsonResult.setErrCode(e.getErrorCode());
+        jsonResult.setMessage(e.getMessage());
         return jsonResult;
     }
 }

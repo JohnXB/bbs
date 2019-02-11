@@ -20,7 +20,8 @@
     </resultMap>
     <!--通过tag获取文章列表-->
     <select id="getArticleByTag" resultMap="BaseResultMap">
-        SELECT ba.title,au.username,ba.content,ba.view_count,ba.comment_num,ba.updated_at,ba.id,ba.type,ba.status,ba.like_num
+        SELECT
+        ba.title,au.username,ba.content,ba.view_count,ba.comment_num,ba.updated_at,ba.id,ba.type,ba.status,ba.like_num
         FROM bbs_article ba
         LEFT JOIN auth_user au ON au.id = ba.user_id
         LEFT JOIN bbs_tag bt on bt.id = ba.tag_id
@@ -42,6 +43,10 @@
         limit #{articleQuery.page},#{articleQuery.pageSize}
     </select>
 
+    <!--创建文章-->
+    <insert id="createArticle" parameterType="com.johnxb.bbs.entity.BbsArticle">
+
+    </insert>
 
     <resultMap id="ArticleInfoMap" type="com.johnxb.bbs.entity.BbsArticle">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -59,8 +64,10 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="username" property="username"/>
         <result column="like_num" property="likeNum"/>
-        <collection property="comments" column="id" select="com.johnxb.bbs.dao.mapper.BbsCommentMapper.findCommentsByArticleId"/>
+        <collection property="comments" column="id"
+                    select="com.johnxb.bbs.dao.mapper.BbsCommentMapper.findCommentsByArticleId"/>
     </resultMap>
+    <!--查看文章（获取文章信息+一级评论）-->
     <select id="getArticleInfoById" resultMap="ArticleInfoMap">
         SELECT ba.title,ba.content,ba.created_at,ba.view_count,ba.comment_num,au.username,ba.like_num,ba.id,ba.type
         FROM bbs_article ba

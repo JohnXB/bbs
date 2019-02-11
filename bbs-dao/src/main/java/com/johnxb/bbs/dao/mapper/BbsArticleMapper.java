@@ -14,4 +14,6 @@ public interface BbsArticleMapper {
      * @return 文章详细信息
      */
     BbsArticle getArticleInfoById(@Param("articleId")Integer articleId);
+
+    Integer createArticle(BbsArticle bbsArticle);
 }

@@ -9,4 +9,10 @@ public interface ArticleService {
     List<BbsArticle> getArticleByTag(Integer tagId, GetArticleDto getArticleDto);
 
     BbsArticle getArticleInfoById(Integer ariticleId);
+
+    /**
+     * @param bbsArticle
+     * @return 创建是否成功
+     */
+    Boolean createArticle(BbsArticle bbsArticle);
 }

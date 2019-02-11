@@ -30,7 +30,7 @@
         <result column="to_username" property="toUsername"/>
         <collection property="comment_num" column="id" select="findSonByParentId"/>
     </resultMap>
-    <!--文章信息之一级评论集合-->
+    <!--文章信息之一级评论集合（限定一页30条）升序（1楼在前）-->
     <select id="findCommentsByArticleId" resultMap="ArticleInfoMap">
       SELECT bc.id,bc.created_at,bc.like_num,bc.floor,bc.content,
       au.username as username,
@@ -39,8 +39,10 @@
       LEFT JOIN auth_user au ON bc.user_id = au.id
       WHERE #{id} = article_id
       AND parent_id = 0 AND to_user_id is NULL
+      order BY created_at asc
+      limit 0,30
     </select>
-
+    <!--一级评论子评论（初始查看文章初始化）-->
     <select id="findSonByParentId" resultType="java.lang.Integer">
       SELECT count(bc.id)
       FROM bbs_comment bc

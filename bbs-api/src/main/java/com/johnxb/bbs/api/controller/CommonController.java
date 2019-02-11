@@ -8,6 +8,7 @@ import com.johnxb.bbs.service.TagService;
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
 import com.johnxb.bbs.utils.exception.BusinessException;
+import com.johnxb.bbs.utils.exception.NotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +76,9 @@ public class CommonController {
 
     @ApiOperation(value = "文章详细信息获取", notes = "根据文章id访问文章")
     @RequestMapping(value = "/article/{articleId}", method = RequestMethod.GET)
-    public JSONResult<ArticleInfoDto> getArticleInfo(@PathVariable Integer articleId) throws BusinessException {
+    public JSONResult<ArticleInfoDto> getArticleInfo(@PathVariable Integer articleId) throws NotFoundException {
         JSONResult<ArticleInfoDto> jsonResult = new JSONResult<>();
-        BbsArticle bbsArticle = Optional.ofNullable(this.articleService.getArticleInfoById(articleId)).orElseThrow(() -> new BusinessException("未找到文章！"));
+        BbsArticle bbsArticle = Optional.ofNullable(this.articleService.getArticleInfoById(articleId)).orElseThrow(() -> new NotFoundException("未找到文章！"));
         jsonResult.setData(BeanMapper.map(bbsArticle,ArticleInfoDto.class));
         return jsonResult;
     }

@@ -32,4 +32,9 @@ public class ArticleServiceImpl implements ArticleService {
     public BbsArticle getArticleInfoById(Integer ariticleId) {
         return this.bbsArticleMapper.getArticleInfoById(ariticleId);
     }
+
+    @Override
+    public Boolean createArticle(BbsArticle bbsArticle) {
+        return this.bbsArticleMapper.createArticle(bbsArticle) > 0;
+    }
 }
