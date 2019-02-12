@@ -16,7 +16,7 @@ public class BbsArticle {
 
     private Integer viewCount;
 
-    private Boolean isExamine;
+    private Byte isExamine;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
@@ -39,6 +39,10 @@ public class BbsArticle {
      * 用户名字段
      */
     private String username;
+    /**
+     * 标签名
+     */
+    private String tagName;
 
     public Integer getId() {
         return id;
@@ -80,11 +84,11 @@ public class BbsArticle {
         this.viewCount = viewCount;
     }
 
-    public Boolean getIsExamine() {
+    public Byte getIsExamine() {
         return isExamine;
     }
 
-    public void setIsExamine(Boolean isExamine) {
+    public void setIsExamine(Byte isExamine) {
         this.isExamine = isExamine;
     }
 
@@ -158,5 +162,13 @@ public class BbsArticle {
 
     public void setLikeNum(Integer likeNum) {
         this.likeNum = likeNum;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 }

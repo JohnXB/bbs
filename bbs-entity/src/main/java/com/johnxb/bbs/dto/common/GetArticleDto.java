@@ -1,4 +1,4 @@
-package com.johnxb.bbs.dto.Common;
+package com.johnxb.bbs.dto.common;
 
 public class GetArticleDto {
     //显示文章方法，1按时间排序，2按推荐排序

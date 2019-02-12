@@ -1,30 +1,33 @@
-package com.johnxb.bbs.dto.Common;
+package com.johnxb.bbs.dto.article;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.johnxb.bbs.dto.ResponseDto;
 
 import java.util.Date;
 
-public class GetArticleOutputDto extends ResponseDto {
+public class ArticleByUserDto extends ResponseDto {
     private Integer id;
 
     private String title;
 
-    private String username;
-
     private Integer viewCount;
+    // 0未审核，1审核，2审核不通过
+    private Byte isExamine;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
-    private Date updatedAt;
-
-    // 状态 0为未审核 1为审核完成 2为推荐
-    private Integer status;
+    private Date createdAt;
 
     private Integer commentNum;
 
-    private Boolean type;
+    private String examineResult;
 
     private String content;
+
+    private Integer likeNum;
+    /**
+     * 标签名
+     */
+    private String tagName;
 
     public Integer getId() {
         return id;
@@ -42,14 +45,6 @@ public class GetArticleOutputDto extends ResponseDto {
         this.title = title;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public Integer getViewCount() {
         return viewCount;
     }
@@ -58,20 +53,20 @@ public class GetArticleOutputDto extends ResponseDto {
         this.viewCount = viewCount;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Byte getIsExamine() {
+        return isExamine;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setIsExamine(Byte isExamine) {
+        this.isExamine = isExamine;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getCommentNum() {
@@ -82,12 +77,12 @@ public class GetArticleOutputDto extends ResponseDto {
         this.commentNum = commentNum;
     }
 
-    public Boolean getType() {
-        return type;
+    public String getExamineResult() {
+        return examineResult;
     }
 
-    public void setType(Boolean type) {
-        this.type = type;
+    public void setExamineResult(String examineResult) {
+        this.examineResult = examineResult;
     }
 
     public String getContent() {
@@ -96,5 +91,21 @@ public class GetArticleOutputDto extends ResponseDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 }

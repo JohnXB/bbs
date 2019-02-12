@@ -1,6 +1,6 @@
 package com.johnxb.bbs.api.controller;
 
-import com.johnxb.bbs.dto.Common.*;
+import com.johnxb.bbs.dto.common.*;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.entity.BbsComment;
 import com.johnxb.bbs.entity.BbsTag;

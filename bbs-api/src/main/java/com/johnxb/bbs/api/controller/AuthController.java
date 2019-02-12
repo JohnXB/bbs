@@ -2,9 +2,9 @@ package com.johnxb.bbs.api.controller;
 
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
-import com.johnxb.bbs.dto.Auth.LoginDto;
-import com.johnxb.bbs.dto.Auth.LoginOutputDto;
-import com.johnxb.bbs.dto.Auth.RegisterDto;
+import com.johnxb.bbs.dto.auth.LoginDto;
+import com.johnxb.bbs.dto.auth.LoginOutputDto;
+import com.johnxb.bbs.dto.auth.RegisterDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.service.AuthUserService;
 import com.johnxb.bbs.utils.exception.BusinessException;

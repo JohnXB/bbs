@@ -1,4 +1,4 @@
-package com.johnxb.bbs.dto.Common;
+package com.johnxb.bbs.dto.common;
 
 import com.johnxb.bbs.dto.RequestDto;
 

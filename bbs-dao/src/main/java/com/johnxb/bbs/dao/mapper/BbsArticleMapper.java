@@ -1,9 +1,8 @@
 package com.johnxb.bbs.dao.mapper;
 
-import com.johnxb.bbs.dto.Common.GetArticleDto;
+import com.johnxb.bbs.dto.common.GetArticleDto;
 import com.johnxb.bbs.entity.BbsArticle;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -23,9 +22,11 @@ public interface BbsArticleMapper {
     Integer createArticle(BbsArticle bbsArticle);
 
     /**
+     * @param userId
      * @param start 偏移量，分页
      * @param count
+     * @param type 文章类型
      * @return
      */
-    List<BbsArticle> getArticleByUser(@Param("userId")Integer userId, @Param("start")Integer start,@Param("count")Integer count);
+    List<BbsArticle> getArticleByUser(@Param("userId")Integer userId, @Param("start")Integer start,@Param("count")Integer count,@Param("type")Integer type);
 }

@@ -1,7 +1,7 @@
 package com.johnxb.bbs.service.impl;
 
 import com.johnxb.bbs.dao.mapper.BbsArticleMapper;
-import com.johnxb.bbs.dto.Common.GetArticleDto;
+import com.johnxb.bbs.dto.common.GetArticleDto;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +42,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Boolean createArticle(BbsArticle bbsArticle) {
         return this.bbsArticleMapper.createArticle(bbsArticle) > 0;
+    }
+
+    public List<BbsArticle> getArticleByUser(Integer userId, GetArticleDto getArticleDto) {
+        // 设置计算偏移量
+        getArticleDto.setPage((getArticleDto.getPage() - 1) * getArticleDto.getPageSize());
+        List<BbsArticle> list = this.bbsArticleMapper.getArticleByUser(userId, getArticleDto.getPage(), getArticleDto.getPageSize(),getArticleDto.getType());
+        return list;
     }
 }

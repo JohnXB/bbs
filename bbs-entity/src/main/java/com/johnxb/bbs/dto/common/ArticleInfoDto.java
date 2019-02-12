@@ -1,11 +1,9 @@
-package com.johnxb.bbs.dto.Common;
+package com.johnxb.bbs.dto.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.johnxb.bbs.dto.ResponseDto;
-import com.johnxb.bbs.entity.BbsComment;
 
 import java.util.Date;
-import java.util.List;
 
 public class ArticleInfoDto extends ResponseDto {
     private Integer id;

@@ -1,4 +1,4 @@
-package com.johnxb.bbs.dto.Auth;
+package com.johnxb.bbs.dto.auth;
 
 import com.johnxb.bbs.dto.RequestDto;
 import io.swagger.annotations.ApiModelProperty;
