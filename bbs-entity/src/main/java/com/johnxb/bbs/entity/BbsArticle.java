@@ -28,7 +28,7 @@ public class BbsArticle {
 
     private Integer commentNum;
 
-    private Boolean type;
+    private Byte type;
 
     private String examineResult;
 
@@ -120,11 +120,11 @@ public class BbsArticle {
         this.commentNum = commentNum;
     }
 
-    public Boolean getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 

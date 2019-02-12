@@ -28,11 +28,17 @@ public class ArticleServiceImpl implements ArticleService {
         return list;
     }
 
+    /**
+     * 通过文章id获取文章信息
+     */
     @Override
     public BbsArticle getArticleInfoById(Integer ariticleId) {
         return this.bbsArticleMapper.getArticleInfoById(ariticleId);
     }
 
+    /**
+     * 创建文章
+     */
     @Override
     public Boolean createArticle(BbsArticle bbsArticle) {
         return this.bbsArticleMapper.createArticle(bbsArticle) > 0;

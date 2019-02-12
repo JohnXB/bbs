@@ -7,7 +7,7 @@ public class BbsMessage {
 
     private Integer userId;
 
-    private Boolean messageType;
+    private Byte messageType;
 
     private String content;
 
@@ -31,11 +31,11 @@ public class BbsMessage {
         this.userId = userId;
     }
 
-    public Boolean getMessageType() {
+    public Byte getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(Boolean messageType) {
+    public void setMessageType(Byte messageType) {
         this.messageType = messageType;
     }
 
