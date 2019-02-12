@@ -22,7 +22,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<BbsArticle> getArticleByTag(Integer tagId, GetArticleDto getArticleDto) {
-        // 设置查找文章数
+        // 设置计算偏移量
         getArticleDto.setPage((getArticleDto.getPage() - 1) * getArticleDto.getPageSize());
         List<BbsArticle> list = this.bbsArticleMapper.getArticleByTag(tagId, getArticleDto);
         return list;

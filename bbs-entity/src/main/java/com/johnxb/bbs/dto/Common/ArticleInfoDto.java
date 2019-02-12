@@ -29,10 +29,6 @@ public class ArticleInfoDto extends ResponseDto {
      */
     private String username;
 
-    /**
-     * 评论(一级评论)
-     */
-    private List<CommentDto> comments;
 
 
     public Integer getId() {
@@ -105,13 +101,5 @@ public class ArticleInfoDto extends ResponseDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public List<CommentDto> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CommentDto> comments) {
-        this.comments = comments;
     }
 }

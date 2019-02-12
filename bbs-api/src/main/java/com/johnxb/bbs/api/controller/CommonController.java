@@ -2,8 +2,10 @@ package com.johnxb.bbs.api.controller;
 
 import com.johnxb.bbs.dto.Common.*;
 import com.johnxb.bbs.entity.BbsArticle;
+import com.johnxb.bbs.entity.BbsComment;
 import com.johnxb.bbs.entity.BbsTag;
 import com.johnxb.bbs.service.ArticleService;
+import com.johnxb.bbs.service.CommentService;
 import com.johnxb.bbs.service.TagService;
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
@@ -26,11 +28,13 @@ import java.util.Optional;
 public class CommonController {
     private final TagService tagService;
     private final ArticleService articleService;
+    private final CommentService commentService;
 
     @Autowired
-    public CommonController(TagService tagService, ArticleService articleService) {
+    public CommonController(TagService tagService, ArticleService articleService, CommentService commentService) {
         this.tagService = tagService;
         this.articleService = articleService;
+        this.commentService = commentService;
     }
 
 
@@ -79,7 +83,22 @@ public class CommonController {
     public JSONResult<ArticleInfoDto> getArticleInfo(@PathVariable Integer articleId) throws NotFoundException {
         JSONResult<ArticleInfoDto> jsonResult = new JSONResult<>();
         BbsArticle bbsArticle = Optional.ofNullable(this.articleService.getArticleInfoById(articleId)).orElseThrow(() -> new NotFoundException("未找到文章！"));
-        jsonResult.setData(BeanMapper.map(bbsArticle,ArticleInfoDto.class));
+        jsonResult.setData(BeanMapper.map(bbsArticle, ArticleInfoDto.class));
+        return jsonResult;
+    }
+
+    @ApiOperation(value = "文章评论获取", notes = "根据文章id获取文章一级评论以及一级评论子评论数")
+    @RequestMapping(value = "/article/{articleId}/comments", method = RequestMethod.GET)
+    public JSONResult<List<CommentDto>> getArticleComment(@PathVariable Integer articleId, CommentInputDto commentInputDto) throws NotFoundException {
+        JSONResult<List<CommentDto>> jsonResult = new JSONResult<>();
+
+        // dto空值判断
+        commentInputDto.setPage(Optional.ofNullable(commentInputDto.getPage()).orElse(1));
+        commentInputDto.setPageSize(Optional.ofNullable(commentInputDto.getPageSize()).orElse(20));
+
+        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId, commentInputDto.getPage(), commentInputDto.getPageSize());
+        jsonResult.setData(BeanMapper.mapList(bbsComments, CommentDto.class));
+
         return jsonResult;
     }
 }

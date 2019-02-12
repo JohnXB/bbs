@@ -12,10 +12,7 @@
         <result column="floor" jdbcType="INTEGER" property="floor"/>
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
     </resultMap>
-    <select id="selectAll" resultMap="BaseResultMap">
-    select id, created_at, like_num, article_id, parent_id, floor, content
-    from bbs_comment
-  </select>
+
 
     <resultMap id="ArticleInfoMap" type="com.johnxb.bbs.entity.BbsComment">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -30,17 +27,17 @@
         <result column="to_username" property="toUsername"/>
         <collection property="comment_num" column="id" select="findSonByParentId"/>
     </resultMap>
-    <!--文章信息之一级评论集合（限定一页30条）升序（1楼在前）-->
+    <!--文章信息之一级评论集合，升序（1楼在前）-->
     <select id="findCommentsByArticleId" resultMap="ArticleInfoMap">
       SELECT bc.id,bc.created_at,bc.like_num,bc.floor,bc.content,
       au.username as username,
       au.id as user_id
       FROM bbs_comment bc
       LEFT JOIN auth_user au ON bc.user_id = au.id
-      WHERE #{id} = article_id
+      WHERE #{articleId} = article_id
       AND parent_id = 0 AND to_user_id is NULL
       order BY created_at asc
-      limit 0,30
+      limit #{start},#{count}
     </select>
     <!--一级评论子评论（初始查看文章初始化）-->
     <select id="findSonByParentId" resultType="java.lang.Integer">

@@ -40,11 +40,6 @@ public class BbsArticle {
      */
     private String username;
 
-    /**
-     * 评论(一级评论)
-     */
-    private List<BbsComment> comments;
-
     public Integer getId() {
         return id;
     }
@@ -163,13 +158,5 @@ public class BbsArticle {
 
     public void setLikeNum(Integer likeNum) {
         this.likeNum = likeNum;
-    }
-
-    public List<BbsComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<BbsComment> comments) {
-        this.comments = comments;
     }
 }

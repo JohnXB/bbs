@@ -64,10 +64,8 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="username" property="username"/>
         <result column="like_num" property="likeNum"/>
-        <collection property="comments" column="id"
-                    select="com.johnxb.bbs.dao.mapper.BbsCommentMapper.findCommentsByArticleId"/>
     </resultMap>
-    <!--查看文章（获取文章信息+一级评论）-->
+    <!--查看文章（获取文章信息）-->
     <select id="getArticleInfoById" resultMap="ArticleInfoMap">
         SELECT ba.title,ba.content,ba.created_at,ba.view_count,ba.comment_num,au.username,ba.like_num,ba.id,ba.type
         FROM bbs_article ba
