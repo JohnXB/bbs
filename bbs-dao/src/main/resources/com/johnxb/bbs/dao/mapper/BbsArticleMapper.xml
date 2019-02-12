@@ -43,6 +43,11 @@
         limit #{articleQuery.page},#{articleQuery.pageSize}
     </select>
 
+    <select id="getArticleByUser" resultMap="BaseResultMap">
+        SELECT
+        ba.title,ba.content,ba.view_count,ba.comment_num,ba.updated_at,ba.id,ba.type,ba.status,ba.like_num
+        FROM bbs_article ba
+    </select>
     <!--创建文章-->
     <insert id="createArticle" parameterType="com.johnxb.bbs.entity.BbsArticle">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
