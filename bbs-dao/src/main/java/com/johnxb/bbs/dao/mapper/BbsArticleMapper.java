@@ -29,4 +29,5 @@ public interface BbsArticleMapper {
      * @return
      */
     List<BbsArticle> getArticleByUser(@Param("userId")Integer userId, @Param("start")Integer start,@Param("count")Integer count,@Param("type")Integer type);
+    Integer deleteArticle(@Param("articleId") Integer articleId,@Param("userId") Integer userId);
 }

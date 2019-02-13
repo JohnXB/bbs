@@ -22,4 +22,6 @@ public interface ArticleService {
      * 获取用户文章
      */
     List<BbsArticle> getArticleByUser(Integer userId, GetArticleDto getArticleDto);
+
+    Boolean deleteArticle(Integer articleId,Integer userId);
 }

@@ -1,5 +1,7 @@
 package com.johnxb.bbs.dto.common;
 
+import javax.validation.constraints.NotNull;
+
 public class GetArticleDto {
     //显示文章方法，1按时间排序，2按推荐排序
     private Integer type;

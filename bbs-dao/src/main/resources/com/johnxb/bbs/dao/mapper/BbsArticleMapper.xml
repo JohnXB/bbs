@@ -62,6 +62,11 @@
         VALUES (#{title},#{userId},#{tagId},#{content},#{type},CURRENT_TIMESTAMP)
     </insert>
 
+    <delete id="deleteArticle">
+      DELETE FROM bbs_article
+      WHERE user_id = #{userId} and id = #{articleId}
+    </delete>
+
     <resultMap id="ArticleInfoMap" type="com.johnxb.bbs.entity.BbsArticle">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>

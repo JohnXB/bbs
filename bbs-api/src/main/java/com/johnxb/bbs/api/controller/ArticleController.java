@@ -34,12 +34,12 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "创建文章", notes = "创建文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/article", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public JSONResult createAticle(@Valid @RequestBody ArticleInputDto articleInputDto) throws BusinessException{
+    public JSONResult createAticle(@Valid @RequestBody ArticleInputDto articleInputDto) throws BusinessException {
         JSONResult jsonResult = new JSONResult();
-        BbsArticle bbsArticle = BeanMapper.map(articleInputDto,BbsArticle.class);
+        BbsArticle bbsArticle = BeanMapper.map(articleInputDto, BbsArticle.class);
         bbsArticle.setUserId(currentUser().getId());
         boolean result = this.articleService.createArticle(bbsArticle);
-        if(!result){
+        if (!result) {
             throw new BusinessException("创建文章失败");
         }
         jsonResult.setMessage("创建成功");
@@ -48,15 +48,30 @@ public class ArticleController extends BaseController {
 
     @ApiOperation(value = "文章获取", notes = "获取当前用户的文章（问题）列表")
     @RequestMapping(value = "/user/articles", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
     public JSONResult<List<ArticleByUserDto>> getArticlesByTag(GetArticleDto getArticleDto) {
         JSONResult<List<ArticleByUserDto>> jsonResult = new JSONResult();
         // dto空值判断
+        getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(1));
         getArticleDto.setPage(Optional.ofNullable(getArticleDto.getPage()).orElse(1));
         getArticleDto.setPageSize(Optional.ofNullable(getArticleDto.getPageSize()).orElse(20));
         getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(0));
 
         List<BbsArticle> bbsArticles = this.articleService.getArticleByUser(currentUser().getId(), getArticleDto);
         jsonResult.setData(BeanMapper.mapList(bbsArticles, ArticleByUserDto.class));
+        return jsonResult;
+    }
+
+    @ApiOperation(value = "删除文章", notes = "根据文章id删除文章")
+    @RequestMapping(value = "/article/{articleId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
+    public JSONResult deleteArticle(@PathVariable Integer articleId) throws BusinessException {
+        JSONResult jsonResult = new JSONResult();
+        Boolean result = this.articleService.deleteArticle(articleId, currentUser().getId());
+        if (!result) {
+            throw new BusinessException("删除文章失败!");
+        }
+        jsonResult.setMessage("删除文章成功!");
         return jsonResult;
     }
 }
