@@ -2,7 +2,7 @@ package com.johnxb.bbs.dto.common;
 
 import com.johnxb.bbs.dto.RequestDto;
 
-public class CommentInputDto extends RequestDto {
+public class CommentPageInputDto extends RequestDto {
     private Integer page;
 
     private Integer pageSize;

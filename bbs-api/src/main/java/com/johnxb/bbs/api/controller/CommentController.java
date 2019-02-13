@@ -1,35 +1,44 @@
 package com.johnxb.bbs.api.controller;
 
+import com.johnxb.bbs.dto.comment.CommentInputDto;
 import com.johnxb.bbs.service.ArticleService;
+import com.johnxb.bbs.service.CommentService;
 import com.johnxb.bbs.utils.JSONResult;
+import com.johnxb.bbs.utils.exception.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @Api(description = "评论相关api")
 //@RequestMapping(value = "/comment")
 @CrossOrigin
-public class CommentController extends BaseController{
-    private final ArticleService articleService;
+public class CommentController extends BaseController {
+    private final CommentService commentService;
 
     @Autowired
-    public CommentController(ArticleService articleService) {
-        this.articleService = articleService;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    @ApiOperation(value = "评论", notes = "创建评论", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/aaa", method = RequestMethod.POST)
+    @ApiOperation(value = "创建评论", notes = "创建评论", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public JSONResult createAticle() {
+    public JSONResult createAticle(@Valid @RequestBody CommentInputDto commentInputDto) throws BusinessException {
         JSONResult jsonResult = new JSONResult();
-        // Todo 创建评论
+        //空值处理
+        commentInputDto.setParentId(Optional.ofNullable(commentInputDto.getParentId()).orElse(0));
+        Boolean result = this.commentService.createComment(currentUser().getId(), commentInputDto);
+        if (!result) {
+            throw new BusinessException("评论失败，请重试");
+        }
+        jsonResult.setMessage("评论成功");
         return jsonResult;
     }
 }

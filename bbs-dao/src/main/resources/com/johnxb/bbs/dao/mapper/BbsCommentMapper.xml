@@ -45,15 +45,21 @@
       FROM bbs_comment bc
       WHERE #{id} = parent_id
     </select>
-
+    <insert id="createComment">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert INTO bbs_comment(user_id,content,to_user_id,parent_id,article_id,floor)
+        VALUES (#{userId},#{comment.content},#{comment.toUserId},#{comment.parentId},#{comment.articleId},1)
+    </insert>
     <!--<select id="findCommentsByParentId" resultMap="ArticleInfoMap">-->
-        <!--SELECT bc.id,bc.created_at,bc.like_num,bc.floor,bc.content,-->
-        <!--au.username as username,-->
-        <!--toau.username as to_username,-->
-        <!--au.id as user_id-->
-        <!--FROM bbs_comment bc-->
-        <!--LEFT JOIN auth_user au ON bc.user_id = au.id-->
-        <!--LEFT JOIN auth_user toau on toau.id = bc.to_user_id-->
-        <!--WHERE #{id} = parent_id-->
+    <!--SELECT bc.id,bc.created_at,bc.like_num,bc.floor,bc.content,-->
+    <!--au.username as username,-->
+    <!--toau.username as to_username,-->
+    <!--au.id as user_id-->
+    <!--FROM bbs_comment bc-->
+    <!--LEFT JOIN auth_user au ON bc.user_id = au.id-->
+    <!--LEFT JOIN auth_user toau on toau.id = bc.to_user_id-->
+    <!--WHERE #{id} = parent_id-->
     <!--</select>-->
 </mapper>

@@ -1,6 +1,7 @@
 package com.johnxb.bbs.service.impl;
 
 import com.johnxb.bbs.dao.mapper.BbsCommentMapper;
+import com.johnxb.bbs.dto.comment.CommentInputDto;
 import com.johnxb.bbs.entity.BbsComment;
 import com.johnxb.bbs.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<BbsComment> findCommentsByArticleId(Integer articleId,Integer page, Integer pageSize) {
+    public List<BbsComment> findCommentsByArticleId(Integer articleId, Integer page, Integer pageSize) {
         return this.bbsCommentMapper.findCommentsByArticleId(articleId, (page - 1) * pageSize, pageSize);
+    }
+
+    @Override
+    public Boolean createComment(Integer userId, CommentInputDto commentInputDto) {
+        return this.bbsCommentMapper.createComment(userId, commentInputDto) > 0;
     }
 }

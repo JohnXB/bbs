@@ -89,14 +89,14 @@ public class CommonController {
 
     @ApiOperation(value = "文章评论获取", notes = "根据文章id获取文章一级评论以及一级评论子评论数")
     @RequestMapping(value = "/article/{articleId}/comments", method = RequestMethod.GET)
-    public JSONResult<List<CommentDto>> getArticleComment(@PathVariable Integer articleId, CommentInputDto commentInputDto) throws NotFoundException {
+    public JSONResult<List<CommentDto>> getArticleComment(@PathVariable Integer articleId, CommentPageInputDto commentPageInputDto) throws NotFoundException {
         JSONResult<List<CommentDto>> jsonResult = new JSONResult<>();
 
         // dto空值判断
-        commentInputDto.setPage(Optional.ofNullable(commentInputDto.getPage()).orElse(1));
-        commentInputDto.setPageSize(Optional.ofNullable(commentInputDto.getPageSize()).orElse(20));
+        commentPageInputDto.setPage(Optional.ofNullable(commentPageInputDto.getPage()).orElse(1));
+        commentPageInputDto.setPageSize(Optional.ofNullable(commentPageInputDto.getPageSize()).orElse(20));
 
-        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId, commentInputDto.getPage(), commentInputDto.getPageSize());
+        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId, commentPageInputDto.getPage(), commentPageInputDto.getPageSize());
         jsonResult.setData(BeanMapper.mapList(bbsComments, CommentDto.class));
 
         return jsonResult;
