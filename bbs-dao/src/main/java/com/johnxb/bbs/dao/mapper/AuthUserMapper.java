@@ -21,8 +21,7 @@ public interface AuthUserMapper {
 
     /**
      * @param user
-     * @return
-     * 管理员登陆
+     * @return 管理员登陆
      */
     AuthUser selectByAdminLogin(AuthUser user);
 
@@ -38,6 +37,9 @@ public interface AuthUserMapper {
      */
     Integer register(AuthUser user);
 
+    String getPass(@Param("username") String username);
+
+    Integer changePass(@Param("newPass") String newPss, @Param("username") String username);
 //    /**
 //     * @param username
 //     * @return true or false

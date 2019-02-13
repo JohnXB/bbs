@@ -2,6 +2,7 @@ package com.johnxb.bbs.service.impl;
 
 import com.johnxb.bbs.dao.mapper.AuthUserMapper;
 import com.johnxb.bbs.dao.mapper.AuthUserRolesMapper;
+import com.johnxb.bbs.dto.auth.ChangePassInputDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.enumeration.DuplicateKeyExceptionEnum;
 import com.johnxb.bbs.service.AuthUserService;
@@ -43,6 +44,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         AuthUser authUser = authUserMapper.selectByUsername(username);
         return authUser;
     }
+
     // 用户登录
     @Override
     public AuthUser login(AuthUser user) {
@@ -62,6 +64,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         }
         return null;
     }
+
     // 管理员登录
     @Override
     public AuthUser adminLogin(AuthUser user) {
@@ -79,6 +82,7 @@ public class AuthUserServiceImpl implements AuthUserService {
         }
         return null;
     }
+
     //当前用户
     @Override
     public AuthUser currentUser() {
@@ -118,12 +122,23 @@ public class AuthUserServiceImpl implements AuthUserService {
         return "注册失败";
     }
 
+    @Override
+    public Boolean changePass(ChangePassInputDto changePassInputDto, String username) throws BusinessException {
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String pass = authUserMapper.getPass(username);
+        if (!encoder.matches(changePassInputDto.getPassword(), pass)) {
+            throw new BusinessException("密码错误，请重试!");
+        } else {
+            return authUserMapper.changePass(encoder.encode(changePassInputDto.getNewPassword().trim()), username) > 0;
+        }
+    }
+
+
     /**
      * @param token
-     * @return
-     * 验证token是否过期
+     * @return 验证token是否过期
      */
-
     private Boolean validate(String token) {
         Date date;
         try {

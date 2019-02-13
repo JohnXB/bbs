@@ -46,7 +46,7 @@ public class ArticleController extends BaseController {
         return jsonResult;
     }
 
-    @ApiOperation(value = "文章获取", notes = "获取当前用户的文章列表")
+    @ApiOperation(value = "文章获取", notes = "获取当前用户的文章（问题）列表")
     @RequestMapping(value = "/user/articles", method = RequestMethod.GET)
     public JSONResult<List<ArticleByUserDto>> getArticlesByTag(GetArticleDto getArticleDto) {
         JSONResult<List<ArticleByUserDto>> jsonResult = new JSONResult();

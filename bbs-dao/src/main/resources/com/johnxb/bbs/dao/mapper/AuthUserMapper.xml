@@ -20,18 +20,21 @@
         FROM auth_user
         where username = #{username}
     </select>
+
     <select id="findRoleByUserId" resultType="java.lang.String">
         select ar.role_code
         FROM auth_role ar
         LEFT join auth_user_roles aur ON aur.role_id = ar.id
         WHERE aur.user_id = #{id}
     </select>
+
     <select id="selectByLogin" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
         SELECT nickname,current_token,avatar,password,au.id,username
         FROM auth_user au
         LEFT JOIN auth_user_roles aur ON au.id = aur.user_id
         WHERE au.username = #{username} AND  aur.role_id = 1
     </select>
+    <!--管理员登陆-->
     <select id="selectByAdminLogin" resultMap="BaseResultMap" parameterType="com.johnxb.bbs.entity.AuthUser">
         SELECT nickname,current_token,avatar,password,au.id,username
         FROM auth_user au
@@ -51,6 +54,18 @@
         insert into auth_user(username,password,mail,phone,register_at,current_token,gender,nickname)
         VALUES (#{username},#{password},#{mail},#{phone},CURRENT_TIMESTAMP ,#{currentToken},#{gender},#{username})
     </insert>
+    <!--获取密码用于验证修改密码-->
+    <select id="getPass" resultType="java.lang.String">
+        SELECT password
+        FROM auth_user
+        WHERE username = #{username}
+    </select>
+    <!--修改密码-->
+    <update id="changePass">
+        update auth_user
+        set password = #{newPass}
+        WHERE username = #{username}
+    </update>
     <!--&lt;!&ndash;检查用户名是否重复&ndash;&gt;-->
     <!--<select id="checkUsername" resultType="java.lang.Integer">-->
     <!--SELECT count(id)-->

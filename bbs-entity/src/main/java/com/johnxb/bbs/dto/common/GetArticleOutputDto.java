@@ -22,7 +22,7 @@ public class GetArticleOutputDto extends ResponseDto {
 
     private Integer commentNum;
 
-    private Boolean type;
+    private Byte type;
 
     private String content;
 
@@ -82,11 +82,11 @@ public class GetArticleOutputDto extends ResponseDto {
         this.commentNum = commentNum;
     }
 
-    public Boolean getType() {
+    public Byte getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Byte type) {
         this.type = type;
     }
 

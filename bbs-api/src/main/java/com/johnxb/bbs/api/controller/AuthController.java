@@ -1,5 +1,6 @@
 package com.johnxb.bbs.api.controller;
 
+import com.johnxb.bbs.dto.auth.ChangePassInputDto;
 import com.johnxb.bbs.utils.BeanMapper;
 import com.johnxb.bbs.utils.JSONResult;
 import com.johnxb.bbs.dto.auth.LoginDto;
@@ -64,10 +65,16 @@ public class AuthController extends BaseController {
         return jsonResult;
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @ApiOperation(value = "用户访问api", notes = "用户访问api", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hi() {
-        return "hello";
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @ApiOperation(value = "修改密码", notes = "用户修改密码", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/user/pass", method = RequestMethod.PUT)
+    public JSONResult changePass(@Valid @RequestBody ChangePassInputDto changePassInputDto) throws BusinessException{
+        JSONResult jsonResult = new JSONResult();
+        Boolean result = this.authUserService.changePass(changePassInputDto,currentUser().getUsername());
+        if(!result){
+            throw new BusinessException("修改密码失败!");
+        }
+        jsonResult.setMessage("修改密码成功!");
+        return jsonResult;
     }
 }

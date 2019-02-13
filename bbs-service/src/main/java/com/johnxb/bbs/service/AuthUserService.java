@@ -1,5 +1,6 @@
 package com.johnxb.bbs.service;
 
+import com.johnxb.bbs.dto.auth.ChangePassInputDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.utils.exception.BusinessException;
 
@@ -23,6 +24,7 @@ public interface AuthUserService {
      * @return 管理员
      */
     AuthUser adminLogin(AuthUser user);
+
     /**
      * @return 当前用户
      */
@@ -33,5 +35,7 @@ public interface AuthUserService {
      * @return 结果
      */
     String register(AuthUser user) throws BusinessException;
+
+    Boolean changePass(ChangePassInputDto changePassInputDto,String username) throws BusinessException;
 
 }
