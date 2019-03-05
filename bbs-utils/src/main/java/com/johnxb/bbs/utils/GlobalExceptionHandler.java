@@ -36,14 +36,14 @@ public class GlobalExceptionHandler{
      * @param e
      * @return
      */
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseBody
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    JSONResult handleAccessDeniedException(AccessDeniedException e) {
-        JSONResult jsonResult = new JSONResult();
-        jsonResult.setMessage(e.getMessage());
-        return jsonResult;
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//    @ResponseBody
+//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+//    JSONResult handleAccessDeniedException(AccessDeniedException e) {
+//        JSONResult jsonResult = new JSONResult();
+//        jsonResult.setMessage(e.getMessage());
+//        return jsonResult;
+//    }
     /**
      * 处理数据验证异常，验证数据的异常捕获
      *

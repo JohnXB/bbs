@@ -16,6 +16,7 @@ public class BbsArticle {
 
     private Integer viewCount;
 
+    // 0未审核，1审核，2审核不通过
     private Byte isExamine;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
@@ -23,11 +24,12 @@ public class BbsArticle {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatedAt;
+
     // 状态 0为未审核 1为审核完成 2为推荐
     private Integer status;
 
     private Integer commentNum;
-
+    // 类型，1表示文章，2表示问题
     private Byte type;
 
     private String examineResult;

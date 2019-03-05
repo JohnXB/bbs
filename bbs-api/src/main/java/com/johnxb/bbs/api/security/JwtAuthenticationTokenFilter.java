@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    private static final String FILTER_APPLIED = "__spring_security_demoFilter_filterApplied";
+    private static final String FILTER_APPLIED = "__spring_security_JwtAuthenticationTokenFilter_filterApplied";
     @Autowired
     private UserDetailsService userDetailsService;
 

@@ -12,4 +12,6 @@ public interface CommentService {
     List<BbsComment> findCommentsByArticleId(Integer articleId, Integer page, Integer pageSize);
 
     Boolean createComment(Integer userId, CommentInputDto commentInputDto);
+
+    Boolean deleteComment(Integer userId,Integer commentId);
 }

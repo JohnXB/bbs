@@ -29,4 +29,15 @@ public class CommentServiceImpl implements CommentService {
     public Boolean createComment(Integer userId, CommentInputDto commentInputDto) {
         return this.bbsCommentMapper.createComment(userId, commentInputDto) > 0;
     }
+
+    @Override
+    public Boolean deleteComment(Integer userId, Integer commentId) {
+        Integer authorId = this.bbsCommentMapper.getArticleUser(commentId);
+        if (authorId == userId) {
+            // 删除自己文章的评论
+            return this.bbsCommentMapper.deleteByAuthor(commentId) > 0;
+        }
+        // 删除自己的评论
+        return this.bbsCommentMapper.deleteByUser(userId, commentId) > 0;
+    }
 }

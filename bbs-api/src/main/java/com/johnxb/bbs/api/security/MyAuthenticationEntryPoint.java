@@ -33,14 +33,13 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         if (authHeader != null && authHeader.startsWith(tokenHead)) {
             final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
-            String username = jwtTokenUtil.getUsernameFromToken(authToken);
-            if (jwtTokenUtil.isTokenExpired(authToken) && username != null) {
+            if (jwtTokenUtil.isTokenExpired(authToken)) {
                 //登录信息已过期，请重新登陆
                 throw new AccessDeniedException("登录信息已过期，请重新登陆");
             } else
-                throw new AccessDeniedException("身份校验错误");
+                throw new AccessDeniedException("令牌有误");
         } else
-            throw new AccessDeniedException("身份校验错误");
+            throw new AccessDeniedException("令牌有误");
 //        httpServletResponse.getWriter().println(jsonObject.toJSONString(jsonResult));
     }
 }

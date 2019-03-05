@@ -30,15 +30,28 @@ public class CommentController extends BaseController {
     @ApiOperation(value = "创建评论", notes = "创建评论", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public JSONResult createAticle(@Valid @RequestBody CommentInputDto commentInputDto) throws BusinessException {
+    public JSONResult createComment(@Valid @RequestBody CommentInputDto commentInputDto) throws BusinessException {
         JSONResult jsonResult = new JSONResult();
         //空值处理
         commentInputDto.setParentId(Optional.ofNullable(commentInputDto.getParentId()).orElse(0));
         Boolean result = this.commentService.createComment(currentUser().getId(), commentInputDto);
         if (!result) {
-            throw new BusinessException("评论失败，请重试");
+            throw new BusinessException("评论失败，请重试!");
         }
-        jsonResult.setMessage("评论成功");
+        jsonResult.setMessage("评论成功!");
+        return jsonResult;
+    }
+
+    @ApiOperation(value = "删除评论", notes = "文章所有者删除评论或删除自己评论")
+    @RequestMapping(value = "/comment/{commentId}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('USER')")
+    public JSONResult deleteComment(@PathVariable Integer commentId) throws BusinessException{
+        JSONResult jsonResult = new JSONResult();
+        Boolean result = this.commentService.deleteComment(currentUser().getId(), commentId);
+        if (!result) {
+            throw new BusinessException("删除评论失败，请重试!");
+        }
+        jsonResult.setMessage("删除评论成功!");
         return jsonResult;
     }
 }
