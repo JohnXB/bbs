@@ -21,8 +21,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<BbsComment> findCommentsByArticleId(Integer articleId, Integer page, Integer pageSize) {
-        return this.bbsCommentMapper.findCommentsByArticleId(articleId, (page - 1) * pageSize, pageSize);
+    public List<BbsComment> findCommentsByArticleId(Integer articleId) {
+        return this.bbsCommentMapper.findCommentsByArticleId(articleId);
     }
 
     @Override

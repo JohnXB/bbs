@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface BbsArticleMapper {
     // 通过tag查询
-    List<BbsArticle> getArticleByTag(@Param("tagId") Integer tagId,@Param("articleQuery") GetArticleDto articleDto);
+    List<BbsArticle> getArticleByTag(@Param("tagId") Integer tagId, @Param("articleQuery") GetArticleDto articleDto);
 
     /**
      * @param articleId
      * @return 文章详细信息
      */
-    BbsArticle getArticleInfoById(@Param("articleId")Integer articleId);
+    BbsArticle getArticleInfoById(@Param("articleId") Integer articleId);
 
     /**
      * 创建文章
@@ -23,11 +23,10 @@ public interface BbsArticleMapper {
 
     /**
      * @param userId
-     * @param start 偏移量，分页
-     * @param count
-     * @param type 文章类型
+     * @param type   文章类型
      * @return
      */
-    List<BbsArticle> getArticleByUser(@Param("userId")Integer userId, @Param("start")Integer start,@Param("count")Integer count,@Param("type")Integer type);
-    Integer deleteArticle(@Param("articleId") Integer articleId,@Param("userId") Integer userId);
+    List<BbsArticle> getArticleByUser(@Param("userId") Integer userId, @Param("type") Integer type);
+
+    Integer deleteArticle(@Param("articleId") Integer articleId, @Param("userId") Integer userId);
 }

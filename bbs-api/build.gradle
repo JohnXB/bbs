@@ -39,6 +39,9 @@ dependencies {
     compile("com.alibaba:fastjson:1.2.7")
     // jwt
     compile("io.jsonwebtoken:jjwt:0.7.0")
+    // redis
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile group: 'com.github.pagehelper', name: 'pagehelper', version: '4.1.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile project(':bbs-utils')
     compile project(':bbs-service-impl')

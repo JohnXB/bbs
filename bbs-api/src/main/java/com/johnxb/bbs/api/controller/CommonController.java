@@ -1,5 +1,7 @@
 package com.johnxb.bbs.api.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.johnxb.bbs.dto.common.*;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.entity.BbsComment;
@@ -67,14 +69,17 @@ public class CommonController {
 
     @ApiOperation(value = "文章获取", notes = "根据tag获取文章")
     @RequestMapping(value = "/tag/{tagId}/articles", method = RequestMethod.GET)
-    public JSONResult<List<GetArticleOutputDto>> getArticlesByTag(@PathVariable Integer tagId, GetArticleDto getArticleDto) {
-        JSONResult<List<GetArticleOutputDto>> jsonResult = new JSONResult();
+    public JSONResult getArticlesByTag(@PathVariable Integer tagId, GetArticleDto getArticleDto) {
+        JSONResult<PageInfo> jsonResult = new JSONResult();
         // dto空值判断
         getArticleDto.setPage(Optional.ofNullable(getArticleDto.getPage()).orElse(1));
         getArticleDto.setPageSize(Optional.ofNullable(getArticleDto.getPageSize()).orElse(20));
         getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(0));
+
+        PageHelper.startPage(getArticleDto.getPage(), getArticleDto.getPageSize());
         List<BbsArticle> bbsArticles = this.articleService.getArticleByTag(tagId, getArticleDto);
-        jsonResult.setData(BeanMapper.mapList(bbsArticles, GetArticleOutputDto.class));
+        PageInfo page = new PageInfo(BeanMapper.mapList(bbsArticles, GetArticleOutputDto.class));
+        jsonResult.setData(page);
         return jsonResult;
     }
 
@@ -89,15 +94,17 @@ public class CommonController {
 
     @ApiOperation(value = "文章评论获取", notes = "根据文章id获取文章一级评论以及一级评论子评论数")
     @RequestMapping(value = "/article/{articleId}/comments", method = RequestMethod.GET)
-    public JSONResult<List<CommentDto>> getArticleComment(@PathVariable Integer articleId, CommentPageInputDto commentPageInputDto) throws NotFoundException {
-        JSONResult<List<CommentDto>> jsonResult = new JSONResult<>();
+    public JSONResult<PageInfo> getArticleComment(@PathVariable Integer articleId, CommentPageInputDto commentPageInputDto) throws NotFoundException {
+        JSONResult<PageInfo> jsonResult = new JSONResult<>();
 
         // dto空值判断
         commentPageInputDto.setPage(Optional.ofNullable(commentPageInputDto.getPage()).orElse(1));
         commentPageInputDto.setPageSize(Optional.ofNullable(commentPageInputDto.getPageSize()).orElse(20));
 
-        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId, commentPageInputDto.getPage(), commentPageInputDto.getPageSize());
-        jsonResult.setData(BeanMapper.mapList(bbsComments, CommentDto.class));
+        PageHelper.startPage(commentPageInputDto.getPage(), commentPageInputDto.getPageSize());
+        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId);
+        PageInfo pageInfo = new PageInfo(BeanMapper.mapList(bbsComments, CommentDto.class));
+        jsonResult.setData(pageInfo);
 
         return jsonResult;
     }

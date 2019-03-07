@@ -41,7 +41,6 @@
         <if test="articleQuery.type == 1 or articleQuery.type == 2">
             ORDER BY ba.updated_at desc
         </if>
-        limit #{articleQuery.page},#{articleQuery.pageSize}
     </select>
     <!--用户查看自己的文章列表-->
     <select id="getArticleByUser" resultMap="BaseResultMap">
@@ -51,7 +50,6 @@
         FROM bbs_article ba
         LEFT JOIN bbs_tag bt on ba.tag_id = bt.id
         WHERE ba.user_id = #{userId} AND ba.type = #{type}
-        limit #{start},#{count}
     </select>
     <!--创建文章-->
     <insert id="createArticle" parameterType="com.johnxb.bbs.entity.BbsArticle">

@@ -22,8 +22,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<BbsArticle> getArticleByTag(Integer tagId, GetArticleDto getArticleDto) {
-        // 设置计算偏移量
-        getArticleDto.setPage((getArticleDto.getPage() - 1) * getArticleDto.getPageSize());
         List<BbsArticle> list = this.bbsArticleMapper.getArticleByTag(tagId, getArticleDto);
         return list;
     }
@@ -45,9 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public List<BbsArticle> getArticleByUser(Integer userId, GetArticleDto getArticleDto) {
-        // 设置计算偏移量
-        getArticleDto.setPage((getArticleDto.getPage() - 1) * getArticleDto.getPageSize());
-        List<BbsArticle> list = this.bbsArticleMapper.getArticleByUser(userId, getArticleDto.getPage(), getArticleDto.getPageSize(), getArticleDto.getType());
+        List<BbsArticle> list = this.bbsArticleMapper.getArticleByUser(userId, getArticleDto.getType());
         return list;
     }
 

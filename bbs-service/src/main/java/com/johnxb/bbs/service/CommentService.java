@@ -9,7 +9,7 @@ public interface CommentService {
     /**
      * 找出文章一级评论
      */
-    List<BbsComment> findCommentsByArticleId(Integer articleId, Integer page, Integer pageSize);
+    List<BbsComment> findCommentsByArticleId(Integer articleId);
 
     Boolean createComment(Integer userId, CommentInputDto commentInputDto);
 

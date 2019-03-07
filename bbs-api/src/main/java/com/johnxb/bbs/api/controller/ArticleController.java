@@ -1,5 +1,7 @@
 package com.johnxb.bbs.api.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.johnxb.bbs.dto.article.ArticleByUserDto;
 import com.johnxb.bbs.dto.common.ArticleInputDto;
 import com.johnxb.bbs.dto.common.GetArticleDto;
@@ -49,16 +51,17 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "文章获取", notes = "获取当前用户的文章（问题）列表")
     @RequestMapping(value = "/user/articles", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public JSONResult<List<ArticleByUserDto>> getArticlesByTag(GetArticleDto getArticleDto) {
-        JSONResult<List<ArticleByUserDto>> jsonResult = new JSONResult();
+    public JSONResult<PageInfo> getArticlesByTag(GetArticleDto getArticleDto) {
+        JSONResult<PageInfo> jsonResult = new JSONResult();
         // dto空值判断
         getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(1));
         getArticleDto.setPage(Optional.ofNullable(getArticleDto.getPage()).orElse(1));
         getArticleDto.setPageSize(Optional.ofNullable(getArticleDto.getPageSize()).orElse(20));
-        getArticleDto.setType(Optional.ofNullable(getArticleDto.getType()).orElse(0));
+        PageHelper.startPage(getArticleDto.getPage(), getArticleDto.getPageSize());
 
         List<BbsArticle> bbsArticles = this.articleService.getArticleByUser(currentUser().getId(), getArticleDto);
-        jsonResult.setData(BeanMapper.mapList(bbsArticles, ArticleByUserDto.class));
+        PageInfo pageInfo = new PageInfo(BeanMapper.mapList(bbsArticles, ArticleByUserDto.class));
+        jsonResult.setData(pageInfo);
         return jsonResult;
     }
 

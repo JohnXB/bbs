@@ -13,7 +13,7 @@ public interface BbsCommentMapper {
     /**
      * 通过文章id查询一级评论
      */
-    List<BbsComment> findCommentsByArticleId(@Param("articleId") Integer articleId, @Param("start") Integer start, @Param("count") Integer count);
+    List<BbsComment> findCommentsByArticleId(@Param("articleId") Integer articleId);
 
     Integer createComment(@Param("userId") Integer userId, @Param("comment") CommentInputDto commentInputDto);
 
