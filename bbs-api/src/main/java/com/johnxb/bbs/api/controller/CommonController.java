@@ -16,6 +16,7 @@ import com.johnxb.bbs.utils.exception.NotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,6 +70,7 @@ public class CommonController {
 
     @ApiOperation(value = "文章获取", notes = "根据tag获取文章")
     @RequestMapping(value = "/tag/{tagId}/articles", method = RequestMethod.GET)
+    @Cacheable(value = "article", key = "'tag'+#tagId+'page'+#getArticleDto.page+'size'+#getArticleDto.pageSize")
     public JSONResult getArticlesByTag(@PathVariable Integer tagId, GetArticleDto getArticleDto) {
         JSONResult<PageInfo> jsonResult = new JSONResult();
         // dto空值判断

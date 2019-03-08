@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
+
 /**
  * JSON Result
  */
 @ApiModel(description = "JSON返回数据")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JSONResult<T> {
+public class JSONResult<T> implements Serializable{
     public JSONResult() {
     }
 

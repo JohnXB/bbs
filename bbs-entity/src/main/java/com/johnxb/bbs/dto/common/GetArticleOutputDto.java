@@ -3,9 +3,10 @@ package com.johnxb.bbs.dto.common;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.johnxb.bbs.dto.ResponseDto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class GetArticleOutputDto extends ResponseDto {
+public class GetArticleOutputDto extends ResponseDto implements Serializable{
     private Integer id;
 
     private String title;

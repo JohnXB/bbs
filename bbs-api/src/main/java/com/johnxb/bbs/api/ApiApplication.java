@@ -31,6 +31,7 @@ import java.util.List;
 public class ApiApplication {
 
     public static void main(String[] args) {
+        System.setProperty("spring.devtools.restart.enabled","false");
         SpringApplication.run(ApiApplication.class, args);
     }
 

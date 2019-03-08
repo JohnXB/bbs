@@ -2,10 +2,11 @@ package com.johnxb.bbs.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class BbsArticle {
+public class BbsArticle implements Serializable{
     private Integer id;
 
     private String title;
