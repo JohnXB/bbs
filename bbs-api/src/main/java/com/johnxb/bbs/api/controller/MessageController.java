@@ -33,11 +33,12 @@ public class MessageController extends BaseController {
     })
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     @PreAuthorize(value = "hasRole('USER')")
-    public JSONResult<PageInfo> getMessages(@RequestParam(defaultValue = "1") Integer pageNum,
+    public JSONResult<PageInfo> getMessages(@RequestParam()Byte messageType,
+                                            @RequestParam(defaultValue = "1") Integer pageNum,
                                             @RequestParam(defaultValue = "20") Integer pageSize) {
         JSONResult<PageInfo> jsonResult = new JSONResult();
         PageHelper.startPage(pageNum, pageSize);
-        jsonResult.setData(new PageInfo(this.messageService.getMessagesByUser(currentUser().getId())));
+        jsonResult.setData(new PageInfo(this.messageService.getMessagesByUser(currentUser().getId(),messageType)));
         return jsonResult;
     }
 }

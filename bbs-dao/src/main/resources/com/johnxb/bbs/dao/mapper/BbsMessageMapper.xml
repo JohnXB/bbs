@@ -6,12 +6,14 @@
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="message_type" jdbcType="BIT" property="messageType"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="already_read"  property="alreadyRead"/>
         <result column="message_id" jdbcType="INTEGER" property="messageId"/>
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
     </resultMap>
     <select id="selectByUserId" resultMap="BaseResultMap">
-      select id, user_id, message_type, content, message_id, created_at
+      select id, user_id, message_type, content, message_id, created_at,already_read
       from bbs_message
-      WHERE user_id = #{userId}
+      WHERE user_id = #{userId} AND message_type = #{messageType}
+      ORDER BY created_at
    </select>
 </mapper>

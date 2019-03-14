@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface BbsMessageMapper {
-    List<BbsMessage> selectByUserId(@Param("userId") Integer userId);
+    List<BbsMessage> selectByUserId(@Param("userId") Integer userId,@Param("messageType")Byte messgeType);
 }

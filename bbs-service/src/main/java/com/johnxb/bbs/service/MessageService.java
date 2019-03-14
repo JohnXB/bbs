@@ -8,5 +8,5 @@ import java.util.List;
  * author johnxiao
  */
 public interface MessageService {
-    List<BbsMessage> getMessagesByUser(Integer user);
+    List<BbsMessage> getMessagesByUser(Integer user, Byte messageType);
 }

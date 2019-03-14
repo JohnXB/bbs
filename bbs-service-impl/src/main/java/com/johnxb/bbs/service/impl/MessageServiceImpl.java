@@ -20,7 +20,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<BbsMessage> getMessagesByUser(Integer userId) {
-        return bbsMessageMapper.selectByUserId(userId);
+    public List<BbsMessage> getMessagesByUser(Integer userId, Byte messageType) {
+        return bbsMessageMapper.selectByUserId(userId, messageType);
     }
 }

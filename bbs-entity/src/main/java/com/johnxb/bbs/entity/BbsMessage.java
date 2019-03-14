@@ -13,6 +13,8 @@ public class BbsMessage {
 
     private Integer messageId;
 
+    private Boolean alreadyRead;
+
     private Date createdAt;
 
     public Integer getId() {
@@ -61,5 +63,13 @@ public class BbsMessage {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Boolean getAlreadyRead() {
+        return alreadyRead;
+    }
+
+    public void setAlreadyRead(Boolean alreadyRead) {
+        this.alreadyRead = alreadyRead;
     }
 }

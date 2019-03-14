@@ -140,6 +140,7 @@ create table bbs_message
    user_id              int(11) not null,
    message_type         tinyint(1) not null comment '消息type，对应码表，parent_id: MESSAGE_TYPE,1表示新的回复，2表示新的关注，3表示关注的人发布新消息',
    content              varchar(50) not null,
+   already_read         tinyint(1) not null comment '消息是否已读',
    message_id           int(11) not null,
    created_at           timestamp not null,
    primary key (id)
