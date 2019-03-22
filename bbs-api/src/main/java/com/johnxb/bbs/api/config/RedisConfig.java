@@ -14,12 +14,15 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
-import static java.util.Collections.singletonMap;
 import static org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig;
 
 @Configuration
@@ -30,11 +33,14 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         //配置前缀为user的缓存的过期时间
-        RedisCacheConfiguration userCacheConfiguration = defaultCacheConfig().entryTtl(Duration.ofSeconds(30)).disableCachingNullValues().prefixKeysWith("article");
+        RedisCacheConfiguration tempCacheConfiguration = config(Constant.REDIS_TEMP).entryTtl(Duration.ofHours(1));
+
+        Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
+        configMap.put(Constant.REDIS_TEMP, tempCacheConfiguration);
 
         RedisCacheManager cm = RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(userCacheConfiguration)
-                .withInitialCacheConfigurations(singletonMap("article", userCacheConfiguration.disableCachingNullValues()))
+                .cacheDefaults(defaultCacheConfig())
+                .withInitialCacheConfigurations(configMap)
                 .transactionAware()
                 .build();
         return cm;
@@ -44,7 +50,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setExposeConnection(true);
         redisTemplate.setConnectionFactory(factory);
         redisTemplate.afterPropertiesSet();
@@ -79,4 +85,18 @@ public class RedisConfig extends CachingConfigurerSupport {
         return cacheErrorHandler;
     }
 
+    private RedisSerializer<String> keySerializer() {
+        return new StringRedisSerializer();
+    }
+
+    private RedisSerializer<Object> valueSerializer() {
+        return new GenericJackson2JsonRedisSerializer();
+    }
+
+    private RedisCacheConfiguration config(String prifix) {
+        return defaultCacheConfig()
+                .disableCachingNullValues().prefixKeysWith(prifix)
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
+    }
 }
