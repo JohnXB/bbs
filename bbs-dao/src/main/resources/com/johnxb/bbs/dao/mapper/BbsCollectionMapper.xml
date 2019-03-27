@@ -7,8 +7,23 @@
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_id, article_id, created_at
-    from bbs_collection
+  <select id="selectByUserAndType" resultMap="BaseResultMap">
+    select bc.id, bc.article_id, bc.created_at
+    from bbs_collection bc
+    inner join bbs_article ba on ba.id = bc.article_id
+    WHERE bc.user_id = #{userId} and ba.type = #{type}
   </select>
+  <insert id="addCollection">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT into bbs_collection(user_id,article_id,created_at)
+    VALUES (#{userId},#{articleId},TIMESTAMP)
+  </insert>
+
+  <delete id="deleteColletion">
+    DELETE FROM bbs_collection
+    WHERE article_id = #{articleId}
+    AND user_id = #{userId}
+  </delete>
 </mapper>

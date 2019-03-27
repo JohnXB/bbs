@@ -2,11 +2,14 @@ package com.johnxb.bbs.api.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.johnxb.bbs.service.CollectionService;
 import com.johnxb.bbs.utils.JSONResult;
+import com.johnxb.bbs.utils.exception.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @Api("收藏相关api")
 public class CollectionController extends BaseController {
 
+    private final CollectionService collectionService;
+
+    @Autowired
+    public CollectionController(CollectionService collectionService) {
+        this.collectionService = collectionService;
+    }
     @ApiOperation(value = "获取当前用户收藏列表", notes = "分页获取，区分文章和问题")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", dataType = "Integer"),
@@ -24,19 +33,29 @@ public class CollectionController extends BaseController {
     public JSONResult<PageInfo> getCollectionList(@RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "20") Integer pageSize,
                                                   @RequestParam(defaultValue = "1") Integer type) {
-        // todo 获取用户收藏列表
         PageHelper.startPage(pageNum, pageSize);
-        PageInfo pageInfo = new PageInfo();
+        PageInfo pageInfo = new PageInfo(collectionService.selectByUserAndType(currentUser().getId(), type));
         return new JSONResult(pageInfo);
     }
 
-    public JSONResult addCollection() {
-        //todo 收藏文章
-        return null;
+    @ApiOperation(value = "收藏文章", notes = "根据文章id收藏文章")
+    @RequestMapping(value = "/colletion/{articleId}", method = RequestMethod.POST)
+    public JSONResult addCollection(@PathVariable Integer articleId) throws BusinessException {
+        boolean result = collectionService.addCollection(currentUser().getId(), articleId);
+        if (!result) {
+            throw new BusinessException("收藏文章失败!");
+        }
+        return new JSONResult("收藏成功");
     }
 
-    public JSONResult delCollection() {
+    @ApiOperation(value = "删除收藏", notes = "根据文章id删除收藏的文章")
+    @RequestMapping(value = "/colletion/{articleId}", method = RequestMethod.DELETE)
+    public JSONResult delCollection(@PathVariable Integer articleId) throws BusinessException{
         //todo 删除收藏
-        return null;
+        boolean result = collectionService.addCollection(currentUser().getId(), articleId);
+        if (!result) {
+            throw new BusinessException("删除收藏失败!");
+        }
+        return new JSONResult("删除收藏成功");
     }
 }
