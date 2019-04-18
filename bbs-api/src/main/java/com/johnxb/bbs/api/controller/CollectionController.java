@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@Api("收藏相关api")
+@Api(value = "收藏相关api")
 public class CollectionController extends BaseController {
 
     private final CollectionService collectionService;
@@ -51,7 +51,6 @@ public class CollectionController extends BaseController {
     @ApiOperation(value = "删除收藏", notes = "根据文章id删除收藏的文章")
     @RequestMapping(value = "/colletion/{articleId}", method = RequestMethod.DELETE)
     public JSONResult delCollection(@PathVariable Integer articleId) throws BusinessException{
-        //todo 删除收藏
         boolean result = collectionService.addCollection(currentUser().getId(), articleId);
         if (!result) {
             throw new BusinessException("删除收藏失败!");

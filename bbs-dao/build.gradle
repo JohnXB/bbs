@@ -21,7 +21,6 @@ dependencies {
 
     // sql监控，日志
     compile 'com.alibaba:druid:1.1.5'
-    compile('org.springframework:spring-jdbc')
     compile project(':bbs-entity')
 
 }

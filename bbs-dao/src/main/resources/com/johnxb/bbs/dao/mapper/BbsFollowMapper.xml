@@ -7,8 +7,51 @@
     <result column="follow_user_id" jdbcType="INTEGER" property="followUserId" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_id, follow_user_id, created_at
-    from bbs_follow
+
+  <resultMap id="FollowDtoMap" type="com.johnxb.bbs.dto.follow.FollowDto">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="username" property="avatar"/>
+    <result column="avatar" property="avatar"/>
+  </resultMap>
+
+  <!--根据type获取关注或者粉丝列表-->
+  <select id="getFollowListByUser" resultMap="FollowDtoMap">
+    select bf.id, bf.user_id, au.username as username, au.avatar as avatar
+    from bbs_follow bf
+    -- type为1表示关注列表，2表示粉丝列表
+    <if test="type == 1">
+      inner JOIN auth_user au on au.id = bf.follow_user_id
+      WHERE user_id = #{userId}
+    </if>
+    <if test="type == 2">
+      inner JOIN auth_user au on au.id = bf.user_id
+      WHERE follow_user_id = #{userId}
+    </if>
   </select>
+
+  <select id="getFollowCountByUser" resultType="java.lang.Integer">
+    SELECT count(id)
+    FROM bbs_follow
+    <if test="type == 1">
+      WHERE user_id = #{userId}
+    </if>
+    <if test="type == 2">
+      WHERE follow_user_id = #{userId}
+    </if>
+  </select>
+
+  <delete id="deleteFollow">
+    DELETE FROM bbs_follow
+    WHERE user_id = #{userId}
+    AND follow_user_id = #{followUserId}
+  </delete>
+
+  <insert id="followByUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO bbs_follow(user_id,follow_user_id,created_at)
+    VALUES (#{userId},#{followUserId},TIMESTAMP)
+  </insert>
 </mapper>
