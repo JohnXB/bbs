@@ -15,7 +15,7 @@ public interface ArticleService {
      * @return 创建是否成功
      */
     Boolean createArticle(BbsArticle bbsArticle);
-
+    Boolean updateArticle(BbsArticle bbsArticle);
     /**
      * @param userId
      * @param getArticleDto

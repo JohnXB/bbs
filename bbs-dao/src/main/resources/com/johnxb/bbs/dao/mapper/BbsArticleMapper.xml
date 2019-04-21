@@ -49,16 +49,33 @@
         ,ba.like_num,bt.tag_name,ba.is_examine,ba.examine_result
         FROM bbs_article ba
         LEFT JOIN bbs_tag bt on ba.tag_id = bt.id
-        WHERE ba.user_id = #{userId} AND ba.type = #{type}
+        <if test="type == 4">
+            WHERE ba.user_id = #{userId} AND ba.status = 3
+        </if>
+        <if test="type != 4">
+            WHERE ba.user_id = #{userId} AND ba.type = #{type}
+        </if>
+
     </select>
+
     <!--创建文章-->
     <insert id="createArticle" parameterType="com.johnxb.bbs.entity.BbsArticle">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into bbs_article(title,user_id,tag_id,content,type,created_at)
-        VALUES (#{title},#{userId},#{tagId},#{content},#{type},CURRENT_TIMESTAMP)
+        insert into bbs_article(title,user_id,tag_id,content,type,status,created_at)
+        VALUES (#{title},#{userId},#{tagId},#{content},#{type},#{status},CURRENT_TIMESTAMP)
     </insert>
+
+    <update id="updateArticle">
+        update bbs_article
+        set title = #{title},
+        tag_id = #{tagId},
+        content = #{content},
+        status = #{status},
+        created_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
 
     <delete id="deleteArticle">
       DELETE FROM bbs_article

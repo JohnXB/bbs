@@ -38,6 +38,7 @@ public class CommentController extends BaseController {
         if (!result) {
             throw new BusinessException("评论失败，请重试!");
         }
+        // todo 评论数加一
         jsonResult.setMessage("评论成功!");
         return jsonResult;
     }
@@ -51,6 +52,7 @@ public class CommentController extends BaseController {
         if (!result) {
             throw new BusinessException("删除评论失败，请重试!");
         }
+        // todo 评论数减一
         jsonResult.setMessage("删除评论成功!");
         return jsonResult;
     }

@@ -52,6 +52,6 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     INSERT INTO bbs_follow(user_id,follow_user_id,created_at)
-    VALUES (#{userId},#{followUserId},TIMESTAMP)
+    VALUES (#{userId},#{followUserId},CURRENT_TIMESTAMP)
   </insert>
 </mapper>

@@ -42,6 +42,11 @@ public class ArticleServiceImpl implements ArticleService {
         return this.bbsArticleMapper.createArticle(bbsArticle) > 0;
     }
 
+    @Override
+    public Boolean updateArticle(BbsArticle bbsArticle) {
+        return this.bbsArticleMapper.updateArticle(bbsArticle) > 0;
+    }
+
     public List<BbsArticle> getArticleByUser(Integer userId, GetArticleDto getArticleDto) {
         List<BbsArticle> list = this.bbsArticleMapper.getArticleByUser(userId, getArticleDto.getType());
         return list;

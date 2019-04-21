@@ -26,7 +26,7 @@ public class BbsArticle implements Serializable{
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updatedAt;
 
-    // 状态 0为未审核 1为审核完成 2为推荐
+    // 状态 0为未审核 1为审核完成 2为推荐 3为草稿
     private Integer status;
 
     private Integer commentNum;

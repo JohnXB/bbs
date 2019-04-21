@@ -14,6 +14,9 @@ public class ArticleInputDto extends RequestDto {
     @NotNull
     private String content;
 
+    @NotNull
+    private Integer status;
+
     public String getTitle() {
         return title;
     }
@@ -44,5 +47,13 @@ public class ArticleInputDto extends RequestDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

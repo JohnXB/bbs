@@ -65,6 +65,21 @@ public class ArticleController extends BaseController {
         return jsonResult;
     }
 
+    @ApiOperation(value = "编辑文章", notes = "草稿文章（状态为3的文章）编辑", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/article", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('USER')")
+    public JSONResult updateAticle(@Valid @RequestBody ArticleInputDto articleInputDto) throws BusinessException {
+        JSONResult jsonResult = new JSONResult();
+        BbsArticle bbsArticle = BeanMapper.map(articleInputDto, BbsArticle.class);
+        bbsArticle.setUserId(currentUser().getId());
+        boolean result = this.articleService.updateArticle(bbsArticle);
+        if (!result) {
+            throw new BusinessException("编辑文章失败");
+        }
+        jsonResult.setMessage("编辑成功");
+        return jsonResult;
+    }
+
     @ApiOperation(value = "删除文章", notes = "根据文章id删除文章")
     @RequestMapping(value = "/article/{articleId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasRole('USER')")

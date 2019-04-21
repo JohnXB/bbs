@@ -18,7 +18,7 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     INSERT into bbs_collection(user_id,article_id,created_at)
-    VALUES (#{userId},#{articleId},TIMESTAMP)
+    VALUES (#{userId},#{articleId},CURRENT_TIMESTAMP)
   </insert>
 
   <delete id="deleteColletion">

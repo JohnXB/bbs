@@ -110,4 +110,11 @@ public class CommonController {
 
         return jsonResult;
     }
+
+    @ApiOperation(value = "新增浏览", notes = "浏览数+1")
+    @RequestMapping(value = "/article/{articleId}/view", method = RequestMethod.POST)
+    public JSONResult addViewCount(@PathVariable Integer articleId) {
+        //  todo 浏览数
+        return null;
+    }
 }

@@ -21,6 +21,7 @@ public interface BbsArticleMapper {
      */
     Integer createArticle(BbsArticle bbsArticle);
 
+    Integer updateArticle(BbsArticle bbsArticle);
     /**
      * @param userId
      * @param type   文章类型
