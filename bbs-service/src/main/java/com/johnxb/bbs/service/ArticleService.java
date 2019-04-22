@@ -24,4 +24,11 @@ public interface ArticleService {
     List<BbsArticle> getArticleByUser(Integer userId, GetArticleDto getArticleDto);
 
     Boolean deleteArticle(Integer articleId,Integer userId);
+
+    Integer commentNumAdd(Integer articleId);
+
+    Integer commentNumReduce(Integer articleId);
+
+    Integer viewCountAdd(Integer articleId);
+
 }

@@ -40,13 +40,6 @@ public class CommonController {
         this.commentService = commentService;
     }
 
-
-    @ApiOperation(value = "所有文章", notes = "所有文章", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping(value = "/articles", method = RequestMethod.GET)
-    public String articles() {
-        return "ab";
-    }
-
     @ApiOperation(value = "所有标签", notes = "获取所有标签基本信息", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping(value = "/tags", method = RequestMethod.GET)
     public JSONResult<List<TagsOutputDto>> tags() {
@@ -68,7 +61,7 @@ public class CommonController {
         return jsonResult;
     }
 
-    @ApiOperation(value = "文章获取", notes = "根据tag获取文章")
+    @ApiOperation(value = "文章获取", notes = "根据tag获取文章列表")
     @RequestMapping(value = "/tag/{tagId}/articles", method = RequestMethod.GET)
     @Cacheable(value = "article", key = "'tag'+#tagId+'page'+#getArticleDto.page+'size'+#getArticleDto.pageSize")
     public JSONResult getArticlesByTag(@PathVariable Integer tagId, GetArticleDto getArticleDto) {
@@ -114,7 +107,7 @@ public class CommonController {
     @ApiOperation(value = "新增浏览", notes = "浏览数+1")
     @RequestMapping(value = "/article/{articleId}/view", method = RequestMethod.POST)
     public JSONResult addViewCount(@PathVariable Integer articleId) {
-        //  todo 浏览数
-        return null;
+        articleService.viewCountAdd(articleId);
+        return new JSONResult(true);
     }
 }

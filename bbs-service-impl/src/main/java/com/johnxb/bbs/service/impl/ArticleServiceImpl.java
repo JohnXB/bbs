@@ -56,4 +56,19 @@ public class ArticleServiceImpl implements ArticleService {
     public Boolean deleteArticle(Integer articleId, Integer userId) {
         return this.bbsArticleMapper.deleteArticle(articleId, userId) > 0;
     }
+
+    @Override
+    public Integer commentNumAdd(Integer articleId) {
+        return bbsArticleMapper.commentNumAdd(articleId);
+    }
+
+    @Override
+    public Integer commentNumReduce(Integer articleId) {
+        return bbsArticleMapper.commentNumReduce(articleId);
+    }
+
+    @Override
+    public Integer viewCountAdd(Integer articleId){
+        return bbsArticleMapper.viewCountAdd(articleId);
+    }
 }

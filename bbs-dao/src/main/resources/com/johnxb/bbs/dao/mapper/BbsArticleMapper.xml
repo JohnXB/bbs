@@ -106,4 +106,22 @@
         LEFT JOIN auth_user au ON au.id = ba.user_id
         WHERE ba.is_examine = true AND ba.id = #{articleId}
     </select>
+
+    <update id="commentNumAdd">
+        UPDATE bbs_article
+        set comment_num = comment_num + 1
+        WHERE id = #{articleId}
+    </update>
+
+    <update id="commentNumReduce">
+        UPDATE bbs_article
+        set comment_num = comment_num - 1
+        WHERE id = #{articleId}
+    </update>
+
+    <update id="viewCountAdd">
+        UPDATE bbs_article
+        set view_count = view_count + 1
+        WHERE id = #{articleId}
+    </update>
 </mapper>

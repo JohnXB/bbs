@@ -30,4 +30,10 @@ public interface BbsArticleMapper {
     List<BbsArticle> getArticleByUser(@Param("userId") Integer userId, @Param("type") Integer type);
 
     Integer deleteArticle(@Param("articleId") Integer articleId, @Param("userId") Integer userId);
+
+    Integer commentNumAdd(@Param("articleId") Integer articleId);
+
+    Integer commentNumReduce(@Param("articleId") Integer articleId);
+
+    Integer viewCountAdd(@Param("articleId") Integer articleId);
 }
