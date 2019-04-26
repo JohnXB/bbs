@@ -30,5 +30,4 @@ public interface ArticleService {
     Integer commentNumReduce(Integer articleId);
 
     Integer viewCountAdd(Integer articleId);
-
 }

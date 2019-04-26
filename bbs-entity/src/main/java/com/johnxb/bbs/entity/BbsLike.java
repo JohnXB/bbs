@@ -1,5 +1,7 @@
 package com.johnxb.bbs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BbsLike {
@@ -8,7 +10,7 @@ public class BbsLike {
     private Integer belongId;
 
     private Integer userId;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
 
     private Boolean type;

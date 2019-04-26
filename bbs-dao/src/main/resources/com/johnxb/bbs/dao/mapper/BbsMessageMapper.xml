@@ -10,10 +10,79 @@
         <result column="message_id" jdbcType="INTEGER" property="messageId"/>
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
     </resultMap>
-    <select id="selectByUserId" resultMap="BaseResultMap">
-      select id, user_id, message_type, content, message_id, created_at,already_read
-      from bbs_message
-      WHERE user_id = #{userId} AND message_type = #{messageType}
+
+    <resultMap id="MessageDtoMap" type="com.johnxb.bbs.dto.message.MessageDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="message_type" jdbcType="BIT" property="messageType"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="already_read" property="alreadyRead"/>
+        <result column="message_id" jdbcType="INTEGER" property="messageId"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="title" property="title"/>
+        <result column="ba_username" property="baUsername"/>
+        <result column="bf_username" property="bfUsername"/>
+        <result column="c_title" property="cTitle"/>
+        <result column="bl_username" property="blUsername"/>
+        <result column="bac_username" property="bacUsername"/>
+        <result column="examine" property="examine"/>
+        <result column="result" property="result"/>
+    </resultMap>
+<!---->
+    <select id="selectByUserId" resultMap="MessageDtoMap">
+      select bm.id, bm.user_id, bm.message_type, bm.content, bm.message_id, bm.created_at,bm.already_read,
+      ba.title as title,bau.username as ba_username,
+      bfu.username as bf_username,  <!--新的关注-->
+      bac.title as c_title,bacu.username as bac_username,<!--新回复的文章标题和回复人名字-->
+      blu.username as bl_username,
+      bae.is_examine as examine ,bae.examine_result as result
+      from bbs_message bm
+      left join bbs_article ba on bm.message_type = 3 and bm.message_id = ba.id
+      left join auth_user bau on ba.user_id = bau.id  <!--新文章-->
+      left join auth_user bfu on bm.message_type = 2 and bm.message_id = bfu.id <!--新关注-->
+      left join bbs_article bac on bm.message_type = 1 and bm.message_id = bac.id
+      left join auth_user bacu on bac.user_id = bacu.id  <!--新回复连接-->
+      left join auth_user blu on bm.message_type = 4 and bm.message_id = blu.id
+      left join bbs_article bae on bm.message_type = 5 and bm.message_id = bae.id
+      WHERE bm.user_id = #{userId}
       ORDER BY created_at
    </select>
+
+    <!--读消息-->
+    <update id="readMessages">
+        UPDATE bbs_message
+        set already_read = 1
+        WHERE user_id = #{userId} and id in
+        <foreach collection="messageIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--删除消息-->
+    <delete id="delMessages">
+        DELETE FROM bbs_message
+        WHERE user_id = #{userId} and id in
+        <foreach collection="messageIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--新消息-->
+    <insert id="newArticleMessage" parameterType="com.johnxb.bbs.event.MessageAddEvent">
+      INSERT INTO bbs_message(user_id,message_type,message_id,already_read,content,created_at)
+      SELECT follow_user_id as user_id,#{type} as message_type,#{belongId} as message_id,
+      0 as already_read,#{content} as content, CURRENT_TIMESTAMP as created_at
+      FROM bbs_follow
+      WHERE user_id = #{userId}
+    </insert>
+
+    <insert id="newCommentMessage" parameterType="com.johnxb.bbs.event.MessageAddEvent">
+        INSERT INTO bbs_message(user_id,message_type,message_id,already_read,content,created_at)
+        VALUES(#{userId},#{type},#{belongId},0,#{content},CURRENT_TIMESTAMP )
+    </insert>
+
+    <insert id="newFollowMessage" parameterType="com.johnxb.bbs.event.MessageAddEvent">
+        INSERT INTO bbs_message(user_id,message_type,message_id,already_read,content,created_at)
+        VALUES(#{userId},#{type},#{belongId},0,#{content},CURRENT_TIMESTAMP )
+    </insert>
 </mapper>

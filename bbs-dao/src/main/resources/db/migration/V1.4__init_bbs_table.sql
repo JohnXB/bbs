@@ -107,7 +107,7 @@ alter table bbs_comment comment '文章评论';
 /*==============================================================*/
 create table bbs_follow
 (
-   id                   int(11) not null,
+   id                   int(11) not null auto_increment,
    user_id              int(11) not null,
    follow_user_id       int(11) not null,
    created_at           timestamp not null default CURRENT_TIMESTAMP,

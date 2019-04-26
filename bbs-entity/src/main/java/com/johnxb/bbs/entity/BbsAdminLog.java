@@ -1,5 +1,7 @@
 package com.johnxb.bbs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BbsAdminLog {
@@ -9,6 +11,7 @@ public class BbsAdminLog {
 
     private String action;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
 
     private String adminName;

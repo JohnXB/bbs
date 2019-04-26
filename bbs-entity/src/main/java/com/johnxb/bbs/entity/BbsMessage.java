@@ -1,5 +1,7 @@
 package com.johnxb.bbs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BbsMessage {
@@ -14,7 +16,7 @@ public class BbsMessage {
     private Integer messageId;
 
     private Boolean alreadyRead;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createdAt;
 
     public Integer getId() {

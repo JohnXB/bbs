@@ -3,8 +3,10 @@ package com.johnxb.bbs.service.impl;
 import com.johnxb.bbs.dao.mapper.BbsArticleMapper;
 import com.johnxb.bbs.dto.common.GetArticleDto;
 import com.johnxb.bbs.entity.BbsArticle;
+import com.johnxb.bbs.event.MessageAddEvent;
 import com.johnxb.bbs.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,12 @@ import java.util.List;
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
     private final BbsArticleMapper bbsArticleMapper;
+    private final ApplicationContext applicationContext;
 
     @Autowired
-    public ArticleServiceImpl(BbsArticleMapper bbsArticleMapper) {
+    public ArticleServiceImpl(BbsArticleMapper bbsArticleMapper, ApplicationContext applicationContext) {
         this.bbsArticleMapper = bbsArticleMapper;
+        this.applicationContext = applicationContext;
     }
 
     @Override
@@ -39,7 +43,11 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Boolean createArticle(BbsArticle bbsArticle) {
-        return this.bbsArticleMapper.createArticle(bbsArticle) > 0;
+        Boolean result = this.bbsArticleMapper.createArticle(bbsArticle) > 0;
+        if(result && bbsArticle.getStatus() != 3){
+            applicationContext.publishEvent(new MessageAddEvent(this,bbsArticle.getUserId(),bbsArticle.getId(),3,"发布新文章"));
+        }
+        return result;
     }
 
     @Override
@@ -69,6 +77,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Integer viewCountAdd(Integer articleId){
-        return bbsArticleMapper.viewCountAdd(articleId);
+        return this.bbsArticleMapper.viewCountAdd(articleId);
     }
 }
