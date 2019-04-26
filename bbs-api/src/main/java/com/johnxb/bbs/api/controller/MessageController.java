@@ -58,5 +58,5 @@ public class MessageController extends BaseController {
     }
 
 
-    // todo 消息观察者模式：发布文章后关注者收到消息（接口 post /article。新的回复被回复人收到消息。新的关注被关注人收到消息,新点赞,审核
+    // 消息观察者模式：发布文章后关注者收到消息（接口 post /article。新的回复被回复人收到消息。新的关注被关注人收到消息,新点赞,审核
 }

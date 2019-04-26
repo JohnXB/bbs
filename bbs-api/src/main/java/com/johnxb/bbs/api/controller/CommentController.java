@@ -40,8 +40,6 @@ public class CommentController extends BaseController {
         if (!result) {
             throw new BusinessException("评论失败，请重试!");
         }
-        // 评论数加一
-        articleService.commentNumAdd(commentInputDto.getArticleId());
         jsonResult.setMessage("评论成功!");
         return jsonResult;
     }
@@ -51,12 +49,10 @@ public class CommentController extends BaseController {
     @PreAuthorize("hasRole('USER')")
     public JSONResult deleteComment(@PathVariable Integer commentId, @PathVariable Integer articleId) throws BusinessException {
         JSONResult jsonResult = new JSONResult();
-        Boolean result = this.commentService.deleteComment(currentUser().getId(), commentId);
+        Boolean result = this.commentService.deleteComment(currentUser().getId(), commentId,articleId);
         if (!result) {
             throw new BusinessException("删除评论失败，请重试!");
         }
-        //  评论数减一
-        articleService.commentNumReduce(articleId);
         jsonResult.setMessage("删除评论成功!");
         return jsonResult;
     }

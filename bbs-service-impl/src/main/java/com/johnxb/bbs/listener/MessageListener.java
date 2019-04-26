@@ -34,6 +34,8 @@ public class MessageListener implements ApplicationListener<MessageAddEvent> {
             case 5:
                 messageService.newExamineMessage(messageAddEvent);
                 break;
+            default:
+                break;
         }
     }
 }

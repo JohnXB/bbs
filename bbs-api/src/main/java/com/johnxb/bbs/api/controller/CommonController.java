@@ -97,7 +97,7 @@ public class CommonController {
         commentPageInputDto.setPageSize(Optional.ofNullable(commentPageInputDto.getPageSize()).orElse(20));
 
         PageHelper.startPage(commentPageInputDto.getPage(), commentPageInputDto.getPageSize());
-        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId);
+        List<BbsComment> bbsComments = this.commentService.findCommentsByArticleId(articleId,commentPageInputDto.getSort());
         PageInfo pageInfo = new PageInfo(BeanMapper.mapList(bbsComments, CommentDto.class));
         jsonResult.setData(pageInfo);
 

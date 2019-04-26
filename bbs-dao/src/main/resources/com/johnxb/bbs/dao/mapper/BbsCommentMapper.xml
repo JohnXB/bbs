@@ -36,7 +36,7 @@
       LEFT JOIN auth_user au ON bc.user_id = au.id
       WHERE #{articleId} = article_id
       AND parent_id = 0 AND to_user_id is NULL
-      order BY created_at asc
+      order BY ${sort} asc
     </select>
     <!--一级评论子评论（初始查看文章初始化）-->
     <select id="findSonByParentId" resultType="java.lang.Integer">
