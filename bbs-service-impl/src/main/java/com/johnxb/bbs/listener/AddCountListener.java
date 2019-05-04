@@ -2,15 +2,18 @@ package com.johnxb.bbs.listener;
 
 import com.johnxb.bbs.event.AddCountEvent;
 import com.johnxb.bbs.service.ArticleService;
+import com.johnxb.bbs.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 
 public class AddCountListener implements ApplicationListener<AddCountEvent> {
     private final ArticleService articleService;
+    private final LikeService likeService;
 
     @Autowired
-    public AddCountListener(ArticleService articleService) {
+    public AddCountListener(ArticleService articleService, LikeService likeService) {
         this.articleService = articleService;
+        this.likeService = likeService;
     }
 
     @Override
@@ -25,10 +28,10 @@ public class AddCountListener implements ApplicationListener<AddCountEvent> {
                 articleService.commentNumReduce(addCountEvent.getBelongId());
                 break;
             case 3:
-                ;
+                likeService.addLikeCount(addCountEvent.getBelongId(), addCountEvent.getBelongType());
                 break;
             case 4:
-                ;
+                likeService.reduceLikeCount(addCountEvent.getBelongId(), addCountEvent.getBelongType());
                 break;
             default:
                 break;

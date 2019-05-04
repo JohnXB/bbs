@@ -8,8 +8,54 @@
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="type" jdbcType="BIT" property="type" />
   </resultMap>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, belong_id, user_id, created_at, type
-    from bbs_like
+
+  <resultMap id="LikedUserMap" type="com.johnxb.bbs.dto.like.LikeInfoDto">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="username" property="username"/>
+    <result column="avatar" property="avatar"/>
+  </resultMap>
+
+  <select id="likeList" resultMap="LikedUserMap">
+    select au.id, au.username, au.avatar
+    from bbs_like bl
+    LEFT JOIN auth_user au on bl.user_id = au.id
+    WHERE bl.type = 1 and bl.belong_id = #{articleId}
+    order by bl.created_at
+    limit 0 10
   </select>
+
+  <insert id="addLike">
+    <selectKey>
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    INSERT INTO bbs_like(belong_id,user_id,created_at,type)
+    VALUES (#{belongId}, #{userId},CURRENT_TIMESTAMP ,#{type})
+  </insert>
+
+  <delete id="delLike">
+    DELETE FROM bbs_like
+    WHERE belong_id = #{belongId} AND type = #{belongType}AND user_id = #{userId}
+  </delete>
+
+  <update id="addLikeCount">
+    <if test="type == 1">
+      UPDATE bbs_article
+    </if>
+    <if test="type == 2">
+      UPDATE bbs_comment
+    </if>
+    set like_num = like_num + 1
+    WHERE belong_id = #{belongId}
+  </update>
+
+  <update id="reduceLikeCount">
+    <if test="type == 1">
+      UPDATE bbs_article
+    </if>
+    <if test="type == 2">
+      UPDATE bbs_comment
+    </if>
+    set like_num = like_num - 1
+    WHERE belong_id = #{belongId}
+  </update>
 </mapper>
