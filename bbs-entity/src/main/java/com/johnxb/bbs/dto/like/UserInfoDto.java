@@ -2,7 +2,7 @@ package com.johnxb.bbs.dto.like;
 
 import com.johnxb.bbs.dto.ResponseDto;
 
-public class LikeInfoDto extends ResponseDto {
+public class UserInfoDto extends ResponseDto {
     private Integer id;
     private String username;
     private String avatar;

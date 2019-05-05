@@ -3,10 +3,12 @@ package com.johnxb.bbs.api.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.johnxb.bbs.dto.common.*;
+import com.johnxb.bbs.dto.like.UserInfoDto;
 import com.johnxb.bbs.entity.BbsArticle;
 import com.johnxb.bbs.entity.BbsComment;
 import com.johnxb.bbs.entity.BbsTag;
 import com.johnxb.bbs.service.ArticleService;
+import com.johnxb.bbs.service.AuthUserService;
 import com.johnxb.bbs.service.CommentService;
 import com.johnxb.bbs.service.TagService;
 import com.johnxb.bbs.utils.BeanMapper;
@@ -32,12 +34,14 @@ public class CommonController {
     private final TagService tagService;
     private final ArticleService articleService;
     private final CommentService commentService;
+    private final AuthUserService authUserService;
 
     @Autowired
-    public CommonController(TagService tagService, ArticleService articleService, CommentService commentService) {
+    public CommonController(TagService tagService, ArticleService articleService, CommentService commentService, AuthUserService authUserService) {
         this.tagService = tagService;
         this.articleService = articleService;
         this.commentService = commentService;
+        this.authUserService = authUserService;
     }
 
     @ApiOperation(value = "所有标签", notes = "获取所有标签基本信息", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -109,5 +113,14 @@ public class CommonController {
     public JSONResult addViewCount(@PathVariable Integer articleId) {
         articleService.viewCountAdd(articleId);
         return new JSONResult(true);
+    }
+
+    @ApiOperation(value = "关键字搜索", notes = "通过关键字搜索文章问题或者用户")
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public JSONResult search(@RequestParam String query) {
+        SearchResult searchResult = new SearchResult();
+        searchResult.setArticles(BeanMapper.mapList(articleService.searchByQuery(query), GetArticleOutputDto.class));
+        searchResult.setUsers(BeanMapper.mapList(authUserService.searchByQuery(query), UserInfoDto.class));
+        return null;
     }
 }

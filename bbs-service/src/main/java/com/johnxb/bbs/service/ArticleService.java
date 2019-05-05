@@ -1,6 +1,7 @@
 package com.johnxb.bbs.service;
 
 import com.johnxb.bbs.dto.common.GetArticleDto;
+import com.johnxb.bbs.dto.common.SearchResult;
 import com.johnxb.bbs.entity.BbsArticle;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface ArticleService {
     Integer commentNumReduce(Integer articleId);
 
     Integer viewCountAdd(Integer articleId);
+
+    List<BbsArticle> searchByQuery(String query);
 }

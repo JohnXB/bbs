@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -151,7 +152,10 @@ public class AuthUserServiceImpl implements AuthUserService {
             return true;
         }
     }
-
+    @Override
+    public List<AuthUser> searchByQuery(String query){
+        return authUserMapper.searchByQuery(query);
+    }
     /**
      * @param user
      * @return token

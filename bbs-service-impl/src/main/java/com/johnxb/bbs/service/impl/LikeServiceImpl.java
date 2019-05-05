@@ -1,7 +1,7 @@
 package com.johnxb.bbs.service.impl;
 
 import com.johnxb.bbs.dao.mapper.BbsLikeMapper;
-import com.johnxb.bbs.dto.like.LikeInfoDto;
+import com.johnxb.bbs.dto.like.UserInfoDto;
 import com.johnxb.bbs.event.AddCountEvent;
 import com.johnxb.bbs.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<LikeInfoDto> likeList(Integer articleId) {
+    public List<UserInfoDto> likeList(Integer articleId) {
         return bbsLikeMapper.likeList(articleId);
     }
 

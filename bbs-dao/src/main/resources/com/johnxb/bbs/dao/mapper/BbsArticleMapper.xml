@@ -124,4 +124,15 @@
         set view_count = view_count + 1
         WHERE id = #{articleId}
     </update>
+
+    <select id="searchByQuery" resultMap="BaseResultMap">
+        SELECT ba.title,au.username,ba.content,ba.view_count,ba.comment_num,
+               ba.updated_at,ba.id,ba.type,ba.status,ba.like_num
+        FROM bbs_article ba
+        LEFT JOIN auth_user au ON au.id = ba.user_id
+        LEFT JOIN bbs_tag bt on bt.id = ba.tag_id
+        WHERE (ba.title like concat('%',#{query},'%')
+        or ba.context like concat('%',#{query},'%'))
+        AND ba.is_examine = true
+    </select>
 </mapper>

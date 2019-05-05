@@ -45,4 +45,6 @@ public interface AuthUserMapper {
 //     * @return true or false
 //     */
 //    Integer checkUsername(@Param("username") String username);
+
+    List<AuthUser> searchByQuery(@Param("query") String query);
 }

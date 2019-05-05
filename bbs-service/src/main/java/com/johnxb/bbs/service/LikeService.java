@@ -1,6 +1,6 @@
 package com.johnxb.bbs.service;
 
-import com.johnxb.bbs.dto.like.LikeInfoDto;
+import com.johnxb.bbs.dto.like.UserInfoDto;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface LikeService {
 
     Integer delLike(Integer userId, Integer belongId, Integer type);
 
-    List<LikeInfoDto> likeList(Integer articleId);
+    List<UserInfoDto> likeList(Integer articleId);
 
     Integer addLikeCount(Integer belongId, Integer belongType);
 

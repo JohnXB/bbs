@@ -72,4 +72,9 @@
     <!--FROM auth_user-->
     <!--WHERE username = #{username}-->
     <!--</select>-->
+    <select id="searchByQuery" resultMap="BaseResultMap">
+        SELECT id,username,avater
+        FROM  auth_user
+        WHERE username like concat('%',#{query},'%')
+    </select>
 </mapper>

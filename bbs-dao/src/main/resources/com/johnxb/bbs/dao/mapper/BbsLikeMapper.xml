@@ -9,7 +9,7 @@
     <result column="type" jdbcType="BIT" property="type" />
   </resultMap>
 
-  <resultMap id="LikedUserMap" type="com.johnxb.bbs.dto.like.LikeInfoDto">
+  <resultMap id="LikedUserMap" type="com.johnxb.bbs.dto.like.UserInfoDto">
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="username" property="username"/>
     <result column="avatar" property="avatar"/>

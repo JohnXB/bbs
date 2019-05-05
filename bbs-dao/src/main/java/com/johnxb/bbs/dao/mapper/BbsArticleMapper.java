@@ -36,4 +36,6 @@ public interface BbsArticleMapper {
     Integer commentNumReduce(@Param("articleId") Integer articleId);
 
     Integer viewCountAdd(@Param("articleId") Integer articleId);
+
+    List<BbsArticle> searchByQuery(@Param("query") String query);
 }

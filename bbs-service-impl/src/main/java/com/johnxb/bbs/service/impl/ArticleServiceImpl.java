@@ -79,4 +79,9 @@ public class ArticleServiceImpl implements ArticleService {
     public Integer viewCountAdd(Integer articleId){
         return this.bbsArticleMapper.viewCountAdd(articleId);
     }
+
+    @Override
+    public List<BbsArticle> searchByQuery(String query) {
+        return bbsArticleMapper.searchByQuery(query);
+    }
 }

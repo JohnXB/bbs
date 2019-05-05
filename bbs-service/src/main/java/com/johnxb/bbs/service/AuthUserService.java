@@ -4,6 +4,8 @@ import com.johnxb.bbs.dto.auth.ChangePassInputDto;
 import com.johnxb.bbs.entity.AuthUser;
 import com.johnxb.bbs.utils.exception.BusinessException;
 
+import java.util.List;
+
 public interface AuthUserService {
 
     /**
@@ -38,4 +40,5 @@ public interface AuthUserService {
 
     Boolean changePass(ChangePassInputDto changePassInputDto,String username) throws BusinessException;
 
+    List<AuthUser> searchByQuery(String query);
 }
